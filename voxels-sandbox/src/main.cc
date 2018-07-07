@@ -59,7 +59,6 @@ int main(int argc, char **argv)
             Q3Cube p = terrain[i];
             renderer.drawCube(p.position.x, p.position.y, p.position.z, 1, 1, 1, p.color);
         }
-        std::cout << glGetError() << std::endl;
 
         window.swapBuffers();
 

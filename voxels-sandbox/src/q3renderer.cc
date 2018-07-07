@@ -53,9 +53,7 @@ void Q3Renderer::drawCube(float x, float y, float z, float sx, float sy, float s
     grassTexture->bind();
     glBegin(GL_QUADS);
     {
-        glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
         // top
-        //glColor3f(topCol.x, topCol.y, topCol.z);
         glTexCoord2f(0, 0);
         glVertex3f(sx, sy, -sz);
         glTexCoord2f(0, 1);
@@ -64,7 +62,8 @@ void Q3Renderer::drawCube(float x, float y, float z, float sx, float sy, float s
         glVertex3f(-sx, sy, sz);
         glTexCoord2f(1, 0);
         glVertex3f(sx, sy, sz);
-
+        
+        // bottom
         glTexCoord2f(0, 0);
         glVertex3f(sx, -sy, sz);
         glTexCoord2f(0, 1);
@@ -76,15 +75,11 @@ void Q3Renderer::drawCube(float x, float y, float z, float sx, float sy, float s
     }
     glEnd();
     grassTexture->unbind();
+    
     sideTexture->bind();
     glBegin(GL_QUADS);
     {
-        // bottom
-        //glColor3f(89.f / 255.f, 87.f / 255.f, 87.f / 255.f);
-        
-
         // front
-        //glColor3f(1.0f, 0.0f, 0.0f);
         glTexCoord2f(1, 0); 
         glVertex3f(sx, sy, sz);
         glTexCoord2f(0, 0);
@@ -95,7 +90,6 @@ void Q3Renderer::drawCube(float x, float y, float z, float sx, float sy, float s
         glVertex3f(sx, -sy, sz);
 
         // back
-        //glColor3f(1.0f, 1.0f, 0.0f);
         glTexCoord2f(1, 1);
         glVertex3f(sx, -sy, -sz);
         glTexCoord2f(0, 1);
@@ -106,7 +100,6 @@ void Q3Renderer::drawCube(float x, float y, float z, float sx, float sy, float s
         glVertex3f(sx, sy, -sz);
 
         // left
-        //glColor3f(0.0f, 0.0f, 1.0f);
         glTexCoord2f(1, 0);
         glVertex3f(-sx, sy, sz);
         glTexCoord2f(0,0);
@@ -117,7 +110,6 @@ void Q3Renderer::drawCube(float x, float y, float z, float sx, float sy, float s
         glVertex3f(-sx, -sy, sz);
 
         // right
-        //glColor3f(1.0f, 0.0f, 1.0f);
         glTexCoord2f(0, 0);
         glVertex3f(sx, sy, -sz);
         glTexCoord2f(1, 0);
@@ -130,5 +122,4 @@ void Q3Renderer::drawCube(float x, float y, float z, float sx, float sy, float s
     glEnd();
     sideTexture->unbind();
     glPopMatrix();
-
 }
