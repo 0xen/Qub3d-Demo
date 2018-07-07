@@ -1,5 +1,5 @@
 #include <qub3d/q3window.hpp>
-#include <qub3d/shared_constants.hpp>
+#include <qub3d/q3shared_constants.hpp>
 
 Q3Window::Q3Window(const char *title, int w, int h): m_running(true) {
     m_window = SDL_CreateWindow(
@@ -22,7 +22,7 @@ Q3Window::Q3Window(const char *title, int w, int h): m_running(true) {
 bool Q3Window::isRunning() { return m_running; }
 
 void Q3Window::sleep(float t) {
-    SDL_Delay(t);
+    SDL_Delay(static_cast<Uint32>(t));
 }
 
 void Q3Window::pollEvents() {

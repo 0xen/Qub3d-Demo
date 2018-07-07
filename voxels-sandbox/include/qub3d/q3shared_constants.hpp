@@ -14,3 +14,6 @@
 #define Q3_WINDOWTITLE_PAUSED "Qub3d Demo - Paused"
 
 #define Q3_FOV 45.f
+
+#define Q3_PIF 3.14159265359f
+#define Q3_PID 3.14159265359
