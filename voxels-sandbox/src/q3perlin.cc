@@ -63,9 +63,9 @@ float Q3PerlinNoiseGenerator::lerp(float a, float b, float x) {
 
 float Q3PerlinNoiseGenerator::perlin(glm::vec3 pos) {
     if (m_repeat > 0) {
-        pos.x = (int)pos.x % m_repeat;
-        pos.y = (int)pos.y % m_repeat;
-        pos.z = (int)pos.z % m_repeat;
+        pos.x = static_cast<float>((int)pos.x % m_repeat);
+        pos.y = static_cast<float>((int)pos.y % m_repeat);
+        pos.z = static_cast<float>((int)pos.z % m_repeat);
     }
     
     glm::ivec3 posi(

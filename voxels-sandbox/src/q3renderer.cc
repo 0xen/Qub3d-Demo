@@ -1,7 +1,7 @@
 #include <qub3d/q3renderer.hpp>
 #include <qub3d/q3opengl.hpp>
 
-#include <qub3d/shared_constants.hpp>
+#include <qub3d/q3shared_constants.hpp>
 
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -15,7 +15,7 @@ Q3Renderer::Q3Renderer() {
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    //glCullFace(GL_BACK);
+    glCullFace(GL_BACK);
     glViewport(0, 0, Q3_WINDOWWIDTH, Q3_WINDOWHEIGHT);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
