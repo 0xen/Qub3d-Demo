@@ -1,7 +1,7 @@
 #pragma once
 
 #include <qub3d/q3camera.hpp>
-#include <qub3d/shared_constants.hpp>
+#include <qub3d/q3shared_constants.hpp>
 #include <qub3d/q3opengl.hpp>
 
 #include <glm/gtc/matrix_transform.hpp>
@@ -30,9 +30,9 @@ void Q3Camera::update(float dt) {
         );
 
         glm::vec3 right(
-            SDL_sinf(m_hAngle - M_PI / 2.f),
-            0,
-            SDL_cosf(m_hAngle - M_PI / 2.f)
+            SDL_sinf(m_hAngle - Q3_PIF / 2.f),
+            0.f,
+            SDL_cosf(m_hAngle - Q3_PIF / 2.f)
         );
 
         m_up = glm::cross(right, m_dir);
