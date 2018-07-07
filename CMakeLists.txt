@@ -32,7 +32,9 @@ include_directories(${libdeps}/SDL2/include)
 add_executable("${project_name}" ${src} ${headers})
 
 if(UNIX)
-    # Do you stuff here :D
+    target_link_libraries(${project_name} 
+        ${libdeps}/SDL2/build/libSDL2-2.0.so
+        GL)
 elseif(WIN32)
     target_link_libraries(${project_name} 
         ${libdeps}/SDL2/build/Debug/SDL2d.lib
