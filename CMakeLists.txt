@@ -7,6 +7,7 @@ project(${project_name})
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 set(code_root voxels-sandbox)
+set(libs_root ${code_root}/third_party)
 
 set(src_root ${code_root}/src)
 set(src
@@ -15,6 +16,9 @@ set(src
     ${src_root}/q3perlin.cc
     ${src_root}/q3renderer.cc
     ${src_root}/q3window.cc
+    ${src_root}/q3texture.cc
+
+    ${libs_root}/lodepng.cc
 )
 
 set(headers_root ${code_root}/include/qub3d)
@@ -25,9 +29,14 @@ set(headers
     ${headers_root}/q3renderer.hpp
     ${headers_root}/q3window.hpp
     ${headers_root}/q3shared_constants.hpp
+    ${headers_root}/q3texture.hpp
+
+    ${libs_root}/lodepng/lodepng.h
 )
 
 include_directories(${code_root}/include)
+include_directories(${libs_root})
+
 add_executable(${project_name} ${src} ${headers})
 
 # Configure dependencies

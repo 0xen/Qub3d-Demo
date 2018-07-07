@@ -2,8 +2,10 @@
 #include <qub3d/q3opengl.hpp>
 
 #include <qub3d/q3shared_constants.hpp>
-
+#include <qub3d/q3texture.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+
+Q3Texture *texture;
 
 Q3Renderer::Q3Renderer()
 {
@@ -23,6 +25,10 @@ Q3Renderer::Q3Renderer()
 
     glm::mat4 perspective = glm::perspective(Q3_FOV, (float)Q3_WINDOWWIDTH / Q3_WINDOWHEIGHT, 0.1f, 100.0f);
     glLoadMatrixf(&perspective[0][0]);
+
+    glEnable(GL_TEXTURE_2D);
+
+    texture = new Q3Texture("assets/grass.png");
 }
 
 void Q3Renderer::clear()
@@ -44,11 +50,17 @@ void Q3Renderer::drawCube(float x, float y, float z, float sx, float sy, float s
     glBegin(GL_QUADS);
     {
         // top
-        glColor3f(topCol.x, topCol.y, topCol.z);
+        //glColor3f(topCol.x, topCol.y, topCol.z);
+        texture->bind();
+        glTexCoord2f(0, 0);
         glVertex3f(sx, sy, -sz);
+        glTexCoord2f(0, 1);
         glVertex3f(-sx, sy, -sz);
+        glTexCoord2f(1, 1);
         glVertex3f(-sx, sy, sz);
+        glTexCoord2f(1, 0);
         glVertex3f(sx, sy, sz);
+        texture->unbind();
 
         // bottom
         glColor3f(89.f / 255.f, 87.f / 255.f, 87.f / 255.f);
