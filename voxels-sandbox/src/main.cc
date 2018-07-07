@@ -1,6 +1,5 @@
 #include <SDL2/SDL_opengl.h>
 #include <SDL2/SDL.h>
-#include <gl/GLU.h>
 #undef main
 
 #include <qub3d/shared_constants.hpp>

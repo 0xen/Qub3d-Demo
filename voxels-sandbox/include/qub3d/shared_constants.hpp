@@ -1,6 +1,6 @@
 #pragma once
 
-#define Q3_FULLSCREEN
+//#define Q3_FULLSCREEN
 
 #ifdef Q3_FULLSCREEN
     #define Q3_WINDOWWIDTH 1920  
@@ -12,3 +12,5 @@
 
 #define Q3_WINDOWTITLE "Qub3d Demo"
 #define Q3_WINDOWTITLE_PAUSED "Qub3d Demo - Paused"
+
+#define Q3_FOV 45.f

@@ -3,6 +3,8 @@
 
 #include <qub3d/shared_constants.hpp>
 
+#include <glm/gtc/matrix_transform.hpp>
+
 Q3Renderer::Q3Renderer() {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClearDepth(1.0f);
@@ -17,7 +19,9 @@ Q3Renderer::Q3Renderer() {
     glViewport(0, 0, Q3_WINDOWWIDTH, Q3_WINDOWHEIGHT);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(90.0f, Q3_WINDOWWIDTH / Q3_WINDOWHEIGHT, 0.1f, 100.0f);
+    
+    glm::mat4 perspective = glm::perspective(Q3_FOV, (float)Q3_WINDOWWIDTH / Q3_WINDOWHEIGHT, 0.1f, 100.0f);
+    glLoadMatrixf(&perspective[0][0]);
 }
 
 void Q3Renderer::clear() {

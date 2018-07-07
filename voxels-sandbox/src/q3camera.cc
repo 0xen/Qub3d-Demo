@@ -4,6 +4,8 @@
 #include <qub3d/shared_constants.hpp>
 #include <qub3d/q3opengl.hpp>
 
+#include <glm/gtc/matrix_transform.hpp>
+
 Q3Camera::Q3Camera(SDL_Window *window) : m_hAngle(0.f), m_vAngle(0.f), m_position(0.f, 0.f, -10.f), m_window(window) {
     SDL_ShowCursor(0);
     SDL_WarpMouseInWindow(window, Q3_WINDOWWIDTH / 2, Q3_WINDOWHEIGHT / 2);
@@ -65,5 +67,6 @@ void Q3Camera::update(float dt) {
 
 void Q3Camera::glLook() {
     glm::vec3 center = m_position + m_dir;
-    gluLookAt(m_position.x, m_position.y, m_position.z, center.x, center.y, center.z, m_up.x, m_up.y, m_up.z);
+    glm::mat4 view = glm::lookAt(m_position, center, m_up);
+    glLoadMatrixf(&view[0][0]);
 }
