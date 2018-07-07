@@ -2,8 +2,9 @@
 
 #include <SDL.h>
 
-class Q3Window {
-public:
+class Q3Window
+{
+  public:
     Q3Window(const char *title, int w, int h);
 
     void pollEvents();
@@ -13,8 +14,8 @@ public:
 
     SDL_Window *getWindow() { return m_window; }
 
-private:
-    SDL_Window * m_window;
+  private:
+    SDL_Window *m_window;
     SDL_GLContext m_context;
 
     bool m_running;
