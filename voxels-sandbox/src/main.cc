@@ -6,7 +6,8 @@
 #undef main
 
 #include <time.h>
-
+#include <iostream>
+#include <qub3d/q3opengl.hpp>
 struct Q3Cube
 {
     glm::vec3 position;
@@ -58,6 +59,7 @@ int main(int argc, char **argv)
             Q3Cube p = terrain[i];
             renderer.drawCube(p.position.x, p.position.y, p.position.z, 1, 1, 1, p.color);
         }
+        std::cout << glGetError() << std::endl;
 
         window.swapBuffers();
 

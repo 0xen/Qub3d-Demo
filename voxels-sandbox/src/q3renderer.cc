@@ -5,8 +5,10 @@
 #include <qub3d/q3texture.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-Q3Texture *texture;
+#include <iostream>
 
+Q3Texture *grassTexture;
+Q3Texture *sideTexture;
 Q3Renderer::Q3Renderer()
 {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -28,7 +30,8 @@ Q3Renderer::Q3Renderer()
 
     glEnable(GL_TEXTURE_2D);
 
-    texture = new Q3Texture("assets/grass.png");
+    grassTexture = new Q3Texture("assets/grass.png");
+    sideTexture = new Q3Texture("assets/sideGrass.png");
 }
 
 void Q3Renderer::clear()
@@ -47,11 +50,12 @@ void Q3Renderer::drawCube(float x, float y, float z, float sx, float sy, float s
 {
     glPushMatrix();
     glTranslatef(x, y, z);
+    grassTexture->bind();
     glBegin(GL_QUADS);
     {
+        glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
         // top
         //glColor3f(topCol.x, topCol.y, topCol.z);
-        texture->bind();
         glTexCoord2f(0, 0);
         glVertex3f(sx, sy, -sz);
         glTexCoord2f(0, 1);
@@ -60,43 +64,71 @@ void Q3Renderer::drawCube(float x, float y, float z, float sx, float sy, float s
         glVertex3f(-sx, sy, sz);
         glTexCoord2f(1, 0);
         glVertex3f(sx, sy, sz);
-        texture->unbind();
 
-        // bottom
-        glColor3f(89.f / 255.f, 87.f / 255.f, 87.f / 255.f);
+        glTexCoord2f(0, 0);
         glVertex3f(sx, -sy, sz);
+        glTexCoord2f(0, 1);
         glVertex3f(-sx, -sy, sz);
+        glTexCoord2f(1, 1);
         glVertex3f(-sx, -sy, -sz);
-        glVertex3f(sx, -sy, -sz);
-
-        // front
-        glColor3f(1.0f, 0.0f, 0.0f);
-        glVertex3f(sx, sy, sz);
-        glVertex3f(-sx, sy, sz);
-        glVertex3f(-sx, -sy, sz);
-        glVertex3f(sx, -sy, sz);
-
-        // back
-        glColor3f(1.0f, 1.0f, 0.0f);
-        glVertex3f(sx, -sy, -sz);
-        glVertex3f(-sx, -sy, -sz);
-        glVertex3f(-sx, sy, -sz);
-        glVertex3f(sx, sy, -sz);
-
-        // left
-        glColor3f(0.0f, 0.0f, 1.0f);
-        glVertex3f(-sx, sy, sz);
-        glVertex3f(-sx, sy, -sz);
-        glVertex3f(-sx, -sy, -sz);
-        glVertex3f(-sx, -sy, sz);
-
-        // right
-        glColor3f(1.0f, 0.0f, 1.0f);
-        glVertex3f(sx, sy, -sz);
-        glVertex3f(sx, sy, sz);
-        glVertex3f(sx, -sy, sz);
+        glTexCoord2f(1, 0);
         glVertex3f(sx, -sy, -sz);
     }
     glEnd();
+    grassTexture->unbind();
+    sideTexture->bind();
+    glBegin(GL_QUADS);
+    {
+        // bottom
+        //glColor3f(89.f / 255.f, 87.f / 255.f, 87.f / 255.f);
+        
+
+        // front
+        //glColor3f(1.0f, 0.0f, 0.0f);
+        glTexCoord2f(1, 0); 
+        glVertex3f(sx, sy, sz);
+        glTexCoord2f(0, 0);
+        glVertex3f(-sx, sy, sz);
+        glTexCoord2f(0, 1);
+        glVertex3f(-sx, -sy, sz);
+        glTexCoord2f(1, 1);
+        glVertex3f(sx, -sy, sz);
+
+        // back
+        //glColor3f(1.0f, 1.0f, 0.0f);
+        glTexCoord2f(1, 1);
+        glVertex3f(sx, -sy, -sz);
+        glTexCoord2f(0, 1);
+        glVertex3f(-sx, -sy, -sz);
+        glTexCoord2f(0, 0);
+        glVertex3f(-sx, sy, -sz);
+        glTexCoord2f(1, 0);
+        glVertex3f(sx, sy, -sz);
+
+        // left
+        //glColor3f(0.0f, 0.0f, 1.0f);
+        glTexCoord2f(1, 0);
+        glVertex3f(-sx, sy, sz);
+        glTexCoord2f(0,0);
+        glVertex3f(-sx, sy, -sz);
+        glTexCoord2f(0, 1);
+        glVertex3f(-sx, -sy, -sz);
+        glTexCoord2f(1, 1);
+        glVertex3f(-sx, -sy, sz);
+
+        // right
+        //glColor3f(1.0f, 0.0f, 1.0f);
+        glTexCoord2f(0, 0);
+        glVertex3f(sx, sy, -sz);
+        glTexCoord2f(1, 0);
+        glVertex3f(sx, sy, sz);
+        glTexCoord2f(1, 1);
+        glVertex3f(sx, -sy, sz);
+        glTexCoord2f(0, 1);
+        glVertex3f(sx, -sy, -sz);
+    } 
+    glEnd();
+    sideTexture->unbind();
     glPopMatrix();
+
 }
