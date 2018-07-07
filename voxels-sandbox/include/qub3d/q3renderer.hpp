@@ -12,5 +12,13 @@ class Q3Renderer
 
     void handleCamera(Q3Camera *camera);
 
+    void start3d();
+    void end3d();
+
+    void start2d();
+    void end2d();
+
+    void drawRect(float x, float y, float w, float h, glm::vec3 col);
+
   private:
 };

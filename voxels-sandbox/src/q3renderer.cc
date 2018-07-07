@@ -9,6 +9,7 @@
 
 Q3Texture *grassTexture;
 Q3Texture *sideTexture;
+
 Q3Renderer::Q3Renderer()
 {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -22,14 +23,14 @@ Q3Renderer::Q3Renderer()
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glCullFace(GL_BACK);
     glViewport(0, 0, Q3_WINDOWWIDTH, Q3_WINDOWHEIGHT);
+    /*
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-
     glm::mat4 perspective = glm::perspective(Q3_FOV, (float)Q3_WINDOWWIDTH / Q3_WINDOWHEIGHT, 0.1f, 100.0f);
-    glLoadMatrixf(&perspective[0][0]);
+    glLoadMatrixf(&perspective[0][0]);*/
 
     glEnable(GL_TEXTURE_2D);
-
+    
     grassTexture = new Q3Texture("assets/grass.png");
     sideTexture = new Q3Texture("assets/sideGrass.png");
 }
@@ -41,9 +42,49 @@ void Q3Renderer::clear()
 
 void Q3Renderer::handleCamera(Q3Camera *camera)
 {
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
+    glPushMatrix();
     camera->glLook();
+}
+
+void Q3Renderer::start3d()
+{
+    glMatrixMode(GL_PROJECTION);
+    glm::mat4 perspective = glm::perspective(Q3_FOV, (float)Q3_WINDOWWIDTH / Q3_WINDOWHEIGHT, 0.1f, 100.0f);
+    glLoadMatrixf(&perspective[0][0]);
+    glPushMatrix();
+    glMatrixMode(GL_MODELVIEW);
+}
+
+void Q3Renderer::end3d()
+{
+    glPopMatrix();
+    glPopMatrix();
+}
+
+void Q3Renderer::start2d()
+{
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(-1.f, 1.f, -1.f, 1.f, -0.1f, 100.0f);
+    glPushMatrix();
+}
+
+void Q3Renderer::end2d()
+{
+    glPopMatrix();
+}
+
+void Q3Renderer::drawRect(float x, float y, float w, float h, glm::vec3 col)
+{
+    glColor3f(col.r, col.g, col.b);
+    glBegin(GL_QUADS);
+    glVertex3f(x, y, 0.f);
+    glVertex3f(x, y+h, 0.f);
+    glVertex3f(x+w, y+h, 0.f);
+    glVertex3f(x+w, y, 0.f);
+
+    glColor3f(1.0f, 1.0f, 1.0f);
+    glEnd();
 }
 
 void Q3Renderer::drawCube(float x, float y, float z, float sx, float sy, float sz, glm::vec3 topCol)

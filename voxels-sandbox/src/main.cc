@@ -53,12 +53,18 @@ int main(int argc, char **argv)
         camera.update(dt);
         renderer.clear();
 
+        renderer.start2d();
+        renderer.drawRect(-0.01f, -0.01f, 0.02, 0.03, glm::vec3(1.0f, 1.0f, 1.0f));
+        renderer.end2d();
+        
+        renderer.start3d();
         renderer.handleCamera(&camera);
         for (int i = 0; i < mapsize * mapsize; ++i)
         {
             Q3Cube p = terrain[i];
             renderer.drawCube(p.position.x, p.position.y, p.position.z, 1, 1, 1, p.color);
         }
+        renderer.end3d();
 
         window.swapBuffers();
 
