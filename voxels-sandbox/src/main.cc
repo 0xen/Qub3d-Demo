@@ -32,10 +32,11 @@ int main(int argc, char **argv)
         for (int x = 0; x < mapsize; ++x)
         {
             Q3Cube &r = terrain[x + z * mapsize];
-            r.position.x = x * 2.f;
+            r.position.x = std::round(+(x * 2.f));
             float pNorm = perlin_noise_generator.perlin(glm::vec3((x * 2) / 10.f, (z * 2) / 10.0f, 0.f));
-            r.position.y = pNorm * 15.f;
-            r.position.z = z * 2.f;
+            pNorm *= 15.f;
+            r.position.y = (int)(pNorm / 2) * 2;
+            r.position.z = std::round(+(z * 2.f));
             r.color = glm::vec3(127.f / 255.f, 214.f / 255.f, 145.f / 255.f);
         }
     }
@@ -55,11 +56,6 @@ int main(int argc, char **argv)
         for (int i = 0; i < mapsize * mapsize; ++i)
         {
             Q3Cube p = terrain[i];
-
-            p.position.x = std::round(+p.position.x);
-            p.position.y = std::round(+p.position.y);
-            p.position.z = std::round(+p.position.z);
-
             renderer.drawCube(p.position.x, p.position.y, p.position.z, 1, 1, 1, p.color);
         }
 
