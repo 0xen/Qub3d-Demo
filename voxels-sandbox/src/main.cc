@@ -1,12 +1,9 @@
-#include <SDL2/SDL_opengl.h>
-#include <SDL2/SDL.h>
-#undef main
-
 #include <qub3d/shared_constants.hpp>
 #include <qub3d/q3window.hpp>
 #include <qub3d/q3renderer.hpp>
 #include <qub3d/q3camera.hpp>
 #include <qub3d/q3perlin.hpp>
+#undef main
 
 #include <time.h>
 #include <math.h>
