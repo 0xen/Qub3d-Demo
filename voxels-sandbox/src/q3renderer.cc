@@ -39,6 +39,10 @@ void Q3Renderer::handleCamera(Q3Camera *camera)
 
 void Q3Renderer::drawCube(float x, float y, float z, float sx, float sy, float sz, glm::vec3 topCol)
 {
+    x = std::round(x);
+    y = std::round(y);
+    z = std::round(z);
+
     glPushMatrix();
     glTranslatef(x, y, z);
     glBegin(GL_QUADS);
