@@ -17,3 +17,5 @@
 
 #define Q3_PIF 3.14159265359f
 #define Q3_PID 3.14159265359
+
+#define Q3_MAPSIZE 50

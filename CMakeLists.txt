@@ -17,6 +17,7 @@ set(src
     ${src_root}/q3renderer.cc
     ${src_root}/q3window.cc
     ${src_root}/q3texture.cc
+    ${src_root}/q3world.cc
 
     ${libs_root}/lodepng.cc
 )
@@ -30,6 +31,7 @@ set(headers
     ${headers_root}/q3window.hpp
     ${headers_root}/q3shared_constants.hpp
     ${headers_root}/q3texture.hpp
+    ${headers_root}/q3world.hpp
 
     ${libs_root}/lodepng/lodepng.h
 )

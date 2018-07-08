@@ -87,7 +87,7 @@ void Q3Renderer::drawRect(float x, float y, float w, float h, glm::vec3 col)
     glEnd();
 }
 
-void Q3Renderer::drawCube(float x, float y, float z, float sx, float sy, float sz, glm::vec3 topCol)
+void Q3Renderer::drawCube(float x, float y, float z, float sx, float sy, float sz)
 {
     glPushMatrix();
     glTranslatef(x, y, z);
