@@ -10,6 +10,11 @@ class Q3Camera
 
     Q3Camera(SDL_Window *window);
 
+    glm::mat4 getViewMatrix();
+
+    glm::vec3 getPosition() { return m_position; }
+    glm::vec3 getDirection() { return m_dir; }
+
   private:
     glm::vec3 m_position;
     glm::vec3 m_up;

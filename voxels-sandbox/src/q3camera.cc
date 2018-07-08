@@ -6,10 +6,19 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
+
 Q3Camera::Q3Camera(SDL_Window *window) : m_hAngle(0.f), m_vAngle(0.f), m_position(0.f, 0.f, -10.f), m_window(window)
 {
     SDL_ShowCursor(0);
     SDL_WarpMouseInWindow(window, Q3_WINDOWWIDTH / 2, Q3_WINDOWHEIGHT / 2);
+}
+
+glm::mat4 Q3Camera::getViewMatrix()
+{
+    glm::vec3 center = m_position + m_dir;
+    glm::mat4 view = glm::lookAt(m_position, center, m_up);
+
+    return view;
 }
 
 bool s_isPaused = false, s_wasPaused = false;
@@ -79,7 +88,6 @@ void Q3Camera::update(float dt)
 
 void Q3Camera::glLook()
 {
-    glm::vec3 center = m_position + m_dir;
-    glm::mat4 view = glm::lookAt(m_position, center, m_up);
+    glm::mat4 view = getViewMatrix();
     glLoadMatrixf(&view[0][0]);
 }
