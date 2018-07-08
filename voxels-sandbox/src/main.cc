@@ -32,7 +32,7 @@ int main(int argc, char **argv)
         
         window.pollEvents();
         camera.update(dt);
-
+        world.tick(&camera, &window);
         renderer.clear();
         renderer.start3d();
         {
