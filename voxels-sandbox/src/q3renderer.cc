@@ -14,22 +14,15 @@ Q3Texture *crosshairTexture;
 Q3Renderer::Q3Renderer()
 {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-    glClearDepth(1.0f);
-    glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_LEQUAL);
-    glShadeModel(GL_SMOOTH);
-    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
+    glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    
     glCullFace(GL_BACK);
+    
     glViewport(0, 0, Q3_WINDOWWIDTH, Q3_WINDOWHEIGHT);
-    /*
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    glm::mat4 perspective = glm::perspective(Q3_FOV, (float)Q3_WINDOWWIDTH / Q3_WINDOWHEIGHT, 0.1f, 100.0f);
-    glLoadMatrixf(&perspective[0][0]);*/
-
+    
     glEnable(GL_TEXTURE_2D);
     
     grassTexture = new Q3Texture("assets/grass.png");
@@ -91,22 +84,27 @@ void Q3Renderer::drawRect(float x, float y, float w, float h, glm::vec3 col)
 
 void Q3Renderer::drawCrosshair()
 {
-        glColor3ub(240, 240, 240); //white
-        glLineWidth(2.0);
-        
-        glBegin(GL_LINES);
+    glPushMatrix();
+    glTranslatef(-0.1f, -0.1f, 0.1f);
+    crosshairTexture->bind();
+    glBegin(GL_QUADS);
+    {
+        glTexCoord2f(0.f, 1.f);
+        glVertex2f(0.f, 0.f);
 
-        glVertex3f(-0.05f, 0.f, 0.f);
-        glVertex3f(0.05f, 0.f, 0.f);
+        glTexCoord2f(0.f, 0.f);
+        glVertex2f(0.f, 0.2f);
 
-        glEnd();
+        glTexCoord2f(1.f, 0.f);
+        glVertex2f(0.2f, 0.2f);
 
-        glBegin(GL_LINES);
+        glTexCoord2f(1.f, 1.f);
+        glVertex2f(0.2f, 0.f);
+    }
+    glEnd();
+    crosshairTexture->unbind();
 
-        glVertex3f(0.f, -0.05f, 0.f);
-        glVertex3f(0.f, 0.05f, 0.f);
-
-        glEnd();
+    glPopMatrix();
 }
 
 void Q3Renderer::drawCube(float x, float y, float z, float sx, float sy, float sz)
