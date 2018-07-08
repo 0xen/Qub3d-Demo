@@ -87,6 +87,26 @@ void Q3Renderer::drawRect(float x, float y, float w, float h, glm::vec3 col)
     glEnd();
 }
 
+void Q3Renderer::drawCrosshair()
+{
+        glColor3ub(240, 240, 240); //white
+        glLineWidth(2.0);
+        
+        glBegin(GL_LINES);
+
+        glVertex3f(-0.05f, 0.f, 0.f);
+        glVertex3f(0.05f, 0.f, 0.f);
+
+        glEnd();
+
+        glBegin(GL_LINES);
+
+        glVertex3f(0.f, -0.05f, 0.f);
+        glVertex3f(0.f, 0.05f, 0.f);
+
+        glEnd();
+}
+
 void Q3Renderer::drawCube(float x, float y, float z, float sx, float sy, float sz)
 {
     glPushMatrix();

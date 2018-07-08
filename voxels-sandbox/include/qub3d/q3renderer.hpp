@@ -19,6 +19,8 @@ class Q3Renderer
     void end2d();
 
     void drawRect(float x, float y, float w, float h, glm::vec3 col);
+    
+    void drawCrosshair();
 
   private:
 };
