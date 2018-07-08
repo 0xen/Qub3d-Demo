@@ -36,7 +36,8 @@ int main(int argc, char **argv)
         renderer.clear();
 
         renderer.start2d();
-        renderer.drawRect(-0.01f, -0.01f, 0.02, 0.03, glm::vec3(1.0f, 1.0f, 1.0f));
+        //renderer.drawRect(-0.01f, -0.01f, 0.02, 0.03, glm::vec3(1.0f, 1.0f, 1.0f));
+        renderer.drawCrosshair();
         renderer.end2d();
         
         renderer.start3d();
