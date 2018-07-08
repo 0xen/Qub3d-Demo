@@ -28,23 +28,24 @@ int main(int argc, char **argv)
     while (window.isRunning())
     {
         Uint32 current_time = SDL_GetTicks();
-
         float dt = static_cast<float>(current_time - last_time);
+        
         window.pollEvents();
-
         camera.update(dt);
+
         renderer.clear();
+        renderer.start3d();
+        {
+            renderer.handleCamera(&camera);
+            world_renderer.render(&world, &renderer);
+        }
+        renderer.end3d();
 
         renderer.start2d();
-        //renderer.drawRect(-0.01f, -0.01f, 0.02, 0.03, glm::vec3(1.0f, 1.0f, 1.0f));
-        renderer.drawCrosshair();
+        {
+            renderer.drawCrosshair();
+        }
         renderer.end2d();
-        
-        renderer.start3d();
-        renderer.handleCamera(&camera);
-        world_renderer.render(&world, &renderer);
-
-        renderer.end3d();
 
         window.swapBuffers();
 
