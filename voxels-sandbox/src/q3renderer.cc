@@ -9,6 +9,7 @@
 
 Q3Texture *grassTexture;
 Q3Texture *sideTexture;
+Q3Texture *crosshairTexture;
 
 Q3Renderer::Q3Renderer()
 {
@@ -33,6 +34,7 @@ Q3Renderer::Q3Renderer()
     
     grassTexture = new Q3Texture("assets/grass.png");
     sideTexture = new Q3Texture("assets/sideGrass.png");
+    crosshairTexture = new Q3Texture("assets/crosshair.png");
 }
 
 void Q3Renderer::clear()
