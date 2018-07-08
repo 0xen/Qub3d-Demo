@@ -48,6 +48,13 @@ set(libdeps ${CMAKE_CURRENT_LIST_DIR}/../qub3d-libdeps)
 include_directories(${libdeps}/glm)
 include_directories(${libdeps}/SDL2/include)
 
+add_custom_command(TARGET ${project_name} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E
+        copy_directory
+            "${CMAKE_CURRENT_SOURCE_DIR}/assets/"
+            "${CMAKE_CURRENT_BINARY_DIR}/assets/"
+)
+
 if(UNIX)
     target_link_libraries(${project_name} 
         ${libdeps}/SDL2/build/libSDL2-2.0.so
