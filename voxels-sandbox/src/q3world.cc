@@ -1,4 +1,4 @@
-#include "..\include\qub3d\q3world.hpp"
+#include <qub3d/q3world.hpp>
 
 #include <qub3d/q3perlin.hpp>
 
