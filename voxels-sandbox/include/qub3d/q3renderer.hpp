@@ -8,7 +8,7 @@ class Q3Renderer
     Q3Renderer();
 
     void clear();
-    void drawCube(float x, float y, float z, float sx, float sy, float sz, glm::vec3 topCol);
+    void drawCube(float x, float y, float z, float sx, float sy, float sz);
 
     void handleCamera(Q3Camera *camera);
 
