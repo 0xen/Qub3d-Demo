@@ -1,5 +1,5 @@
 #include <qub3d/q3world.hpp>
-#include <qub3d/q3perlin.hpp>
+#include <qub3d/q3generator.hpp>
 
 #include <iostream>
 #include <vector>
