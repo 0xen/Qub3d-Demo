@@ -7,10 +7,10 @@
 
 #include <iostream>
 
-Q3Texture *grassTexture;
-Q3Texture *sideTexture;
-Q3Texture *crosshairTexture;
-Q3Texture *dirtTexture;
+Q3Texture *s_grass_texture;
+Q3Texture *s_dirt_and_grass_texture;
+Q3Texture *s_crosshair_texture;
+Q3Texture *s_dirt_texture;
 
 Q3Renderer::Q3Renderer()
 {
@@ -26,10 +26,10 @@ Q3Renderer::Q3Renderer()
     
     glEnable(GL_TEXTURE_2D);
     
-    grassTexture = new Q3Texture("assets/grass.png");
-    sideTexture = new Q3Texture("assets/sideGrass.png");
-    crosshairTexture = new Q3Texture("assets/crosshair.png");
-    dirtTexture = new Q3Texture("assets/dirt.png");
+    s_grass_texture = new Q3Texture("assets/grass.png");
+    s_dirt_and_grass_texture = new Q3Texture("assets/sideGrass.png");
+    s_crosshair_texture = new Q3Texture("assets/crosshair.png");
+    s_dirt_texture = new Q3Texture("assets/dirt.png");
 }
 
 void Q3Renderer::clear()
@@ -88,7 +88,7 @@ void Q3Renderer::drawCrosshair()
 {
     glPushMatrix();
     glTranslatef(-0.1f, -0.1f, 0.1f);
-    crosshairTexture->bind();
+    s_crosshair_texture->bind();
     glBegin(GL_QUADS);
     {
         glTexCoord2f(0.f, 1.f);
@@ -104,7 +104,7 @@ void Q3Renderer::drawCrosshair()
         glVertex2f(0.2f, 0.f);
     }
     glEnd();
-    crosshairTexture->unbind();
+    s_crosshair_texture->unbind();
 
     glPopMatrix();
 }
@@ -113,7 +113,7 @@ void Q3Renderer::drawCube(float x, float y, float z, float sx, float sy, float s
 {
     glPushMatrix();
     glTranslatef(x, y, z);
-    grassTexture->bind();
+    s_grass_texture->bind();
     glBegin(GL_QUADS);
     {
         // top
@@ -127,9 +127,9 @@ void Q3Renderer::drawCube(float x, float y, float z, float sx, float sy, float s
         glVertex3f(sx, sy, sz);
     }
     glEnd();
-    grassTexture->unbind();
+    s_grass_texture->unbind();
     
-    dirtTexture->bind();
+    s_dirt_texture->bind();
     glBegin(GL_QUADS);
     // bottom
     glTexCoord2f(0, 0);
@@ -141,10 +141,10 @@ void Q3Renderer::drawCube(float x, float y, float z, float sx, float sy, float s
     glTexCoord2f(1, 0);
     glVertex3f(sx, -sy, -sz);
     glEnd();
-    dirtTexture->unbind();
+    s_dirt_texture->unbind();
 
     glColor3f(0.8f, 0.8f, 0.8f);
-    sideTexture->bind();
+    s_dirt_and_grass_texture->bind();
     glBegin(GL_QUADS);
     {
         // front
@@ -190,6 +190,6 @@ void Q3Renderer::drawCube(float x, float y, float z, float sx, float sy, float s
     glColor3f(1.f, 1.f, 1.f);
 
     glEnd();
-    sideTexture->unbind();
+    s_dirt_and_grass_texture->unbind();
     glPopMatrix();
 }
