@@ -13,7 +13,7 @@ set(src_root ${code_root}/src)
 set(src
     ${src_root}/main.cc
     ${src_root}/q3camera.cc
-    ${src_root}/q3perlin.cc
+    ${src_root}/q3generator.cc
     ${src_root}/q3renderer.cc
     ${src_root}/q3window.cc
     ${src_root}/q3texture.cc
@@ -26,7 +26,7 @@ set(headers_root ${code_root}/include/qub3d)
 set(headers
     ${headers_root}/q3camera.hpp
     ${headers_root}/q3opengl.hpp
-    ${headers_root}/q3perlin.hpp
+    ${headers_root}/q3generator.hpp
     ${headers_root}/q3renderer.hpp
     ${headers_root}/q3window.hpp
     ${headers_root}/q3shared_constants.hpp

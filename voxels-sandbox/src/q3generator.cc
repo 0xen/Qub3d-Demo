@@ -1,4 +1,4 @@
-#include <qub3d/q3perlin.hpp>
+#include <qub3d/q3generator.hpp>
 /*
 http://flafla2.github.io/2014/08/09/perlinnoise.html
 */
