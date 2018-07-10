@@ -11,6 +11,7 @@ Q3Texture *s_grass_texture;
 Q3Texture *s_dirt_and_grass_texture;
 Q3Texture *s_crosshair_texture;
 Q3Texture *s_dirt_texture;
+Q3Spritesheet *s_blocks;
 
 Q3Renderer::Q3Renderer()
 {
@@ -20,8 +21,6 @@ Q3Renderer::Q3Renderer()
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
-    glCullFace(GL_BACK);
-    
     glViewport(0, 0, Q3_WINDOWWIDTH, Q3_WINDOWHEIGHT);
     
     glEnable(GL_TEXTURE_2D);
@@ -30,6 +29,8 @@ Q3Renderer::Q3Renderer()
     s_dirt_and_grass_texture = new Q3Texture("assets/sideGrass.png");
     s_crosshair_texture = new Q3Texture("assets/crosshair.png");
     s_dirt_texture = new Q3Texture("assets/dirt.png");
+
+    s_blocks = new Q3Spritesheet("assets/blocks.png");
 }
 
 void Q3Renderer::clear()
@@ -109,87 +110,94 @@ void Q3Renderer::drawCrosshair()
     glPopMatrix();
 }
 
-void Q3Renderer::drawCube(float x, float y, float z, float sx, float sy, float sz)
+void Q3Renderer::drawCube(float x, float y, float z, float sx, float sy, float sz, Q3BlockRendereringData& data)
 {
     glPushMatrix();
     glTranslatef(x, y, z);
-    s_grass_texture->bind();
+    s_blocks->bind();
+    
+    Q3Spritesheet::UVData top_uvs = s_blocks->getSprite(data.top_face.y, data.top_face.x);
     glBegin(GL_QUADS);
     {
         // top
-        glTexCoord2f(0, 0);
+        glTexCoord2f(top_uvs.BottomLeft.x, top_uvs.BottomLeft.y);
         glVertex3f(sx, sy, -sz);
-        glTexCoord2f(0, 1);
+        glTexCoord2f(top_uvs.TopLeft.x, top_uvs.TopLeft.y);
         glVertex3f(-sx, sy, -sz);
-        glTexCoord2f(1, 1);
+        glTexCoord2f(top_uvs.TopRight.x, top_uvs.TopRight.y);
         glVertex3f(-sx, sy, sz);
-        glTexCoord2f(1, 0);
+        glTexCoord2f(top_uvs.BottomRight.x, top_uvs.BottomRight.y);
         glVertex3f(sx, sy, sz);
     }
     glEnd();
-    s_grass_texture->unbind();
-    
-    s_dirt_texture->bind();
-    glBegin(GL_QUADS);
-    // bottom
-    glTexCoord2f(0, 0);
-    glVertex3f(sx, -sy, sz);
-    glTexCoord2f(0, 1);
-    glVertex3f(-sx, -sy, sz);
-    glTexCoord2f(1, 1);
-    glVertex3f(-sx, -sy, -sz);
-    glTexCoord2f(1, 0);
-    glVertex3f(sx, -sy, -sz);
-    glEnd();
-    s_dirt_texture->unbind();
 
-    glColor3f(0.8f, 0.8f, 0.8f);
-    s_dirt_and_grass_texture->bind();
+    Q3Spritesheet::UVData bottom_uvs = s_blocks->getSprite(data.bottom_face.y, data.bottom_face.x);
+
     glBegin(GL_QUADS);
     {
-        // front
-        glTexCoord2f(1, 0); 
-        glVertex3f(sx, sy, sz);
-        glTexCoord2f(0, 0);
-        glVertex3f(-sx, sy, sz);
-        glTexCoord2f(0, 1);
-        glVertex3f(-sx, -sy, sz);
-        glTexCoord2f(1, 1);
+        // bottom
+        glTexCoord2f(bottom_uvs.BottomLeft.x, bottom_uvs.BottomLeft.y);
         glVertex3f(sx, -sy, sz);
+        glTexCoord2f(bottom_uvs.TopLeft.x, bottom_uvs.TopLeft.y);
+        glVertex3f(-sx, -sy, sz);
+        glTexCoord2f(bottom_uvs.TopRight.x, bottom_uvs.TopRight.y);
+        glVertex3f(-sx, -sy, -sz);
+        glTexCoord2f(bottom_uvs.BottomRight.x, bottom_uvs.BottomRight.y);
+        glVertex3f(sx, -sy, -sz);
+    }
+    glEnd();
+    
+    glBegin(GL_QUADS); 
+    {
+        Q3Spritesheet::UVData front_uvs = s_blocks->getSprite(data.forward_face.y, data.forward_face.x);
+        // front
+        glTexCoord2f(front_uvs.TopRight.x, front_uvs.TopRight.y);
+        glVertex3f(sx, sy, sz);
+        glTexCoord2f(front_uvs.TopLeft.x, front_uvs.TopLeft.y);
+        glVertex3f(-sx, sy, sz);
+        glTexCoord2f(front_uvs.BottomLeft.x, front_uvs.BottomLeft.y);
+        glVertex3f(-sx, -sy, sz);
+        glTexCoord2f(front_uvs.BottomRight.x, front_uvs.BottomRight.y);
+        glVertex3f(sx, -sy, sz);
+
+        Q3Spritesheet::UVData back_uvs = s_blocks->getSprite(data.backward_face.y, data.backward_face.x);
 
         // back
-        glTexCoord2f(1, 1);
+        glTexCoord2f(back_uvs.BottomRight.x, back_uvs.BottomRight.y);
         glVertex3f(sx, -sy, -sz);
-        glTexCoord2f(0, 1);
+        glTexCoord2f(back_uvs.BottomLeft.x, back_uvs.BottomLeft.y);
         glVertex3f(-sx, -sy, -sz);
-        glTexCoord2f(0, 0);
+        glTexCoord2f(back_uvs.TopLeft.x, back_uvs.TopLeft.y);
         glVertex3f(-sx, sy, -sz);
-        glTexCoord2f(1, 0);
+        glTexCoord2f(back_uvs.TopRight.x, back_uvs.TopRight.y);
         glVertex3f(sx, sy, -sz);
+
+        Q3Spritesheet::UVData left_uvs = s_blocks->getSprite(data.left_face.y, data.left_face.x);
 
         // left
-        glTexCoord2f(1, 0);
+        glTexCoord2f(left_uvs.TopRight.x, left_uvs.TopRight.y);
         glVertex3f(-sx, sy, sz);
-        glTexCoord2f(0,0);
+        glTexCoord2f(left_uvs.TopLeft.x, left_uvs.TopLeft.y);
         glVertex3f(-sx, sy, -sz);
-        glTexCoord2f(0, 1);
+        glTexCoord2f(left_uvs.BottomLeft.x, left_uvs.BottomLeft.y);
         glVertex3f(-sx, -sy, -sz);
-        glTexCoord2f(1, 1);
+        glTexCoord2f(left_uvs.BottomRight.x, left_uvs.BottomRight.y);
         glVertex3f(-sx, -sy, sz);
 
+        Q3Spritesheet::UVData rights_uvs = s_blocks->getSprite(data.right_face.y, data.right_face.x);
+
         // right
-        glTexCoord2f(0, 0);
+        glTexCoord2f(rights_uvs.TopLeft.x, rights_uvs.TopLeft.y);
         glVertex3f(sx, sy, -sz);
-        glTexCoord2f(1, 0);
+        glTexCoord2f(rights_uvs.TopRight.x, rights_uvs.TopRight.y);
         glVertex3f(sx, sy, sz);
-        glTexCoord2f(1, 1);
+        glTexCoord2f(rights_uvs.BottomRight.x, rights_uvs.BottomRight.y);
         glVertex3f(sx, -sy, sz);
-        glTexCoord2f(0, 1);
+        glTexCoord2f(rights_uvs.BottomLeft.x, rights_uvs.BottomLeft.y);
         glVertex3f(sx, -sy, -sz);
     } 
-    glColor3f(1.f, 1.f, 1.f);
-
+    
     glEnd();
-    s_dirt_and_grass_texture->unbind();
+    s_blocks->unbind();
     glPopMatrix();
 }

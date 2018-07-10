@@ -5,6 +5,11 @@
 #include <vector>
 #include <functional>
 
+Q3BlockRendereringData Q3World::blocks[Q3_NO_BLOCKS] = {
+    Q3BlockRendereringData({1, 0}, {0,0},{2,0}, {2,0},{ 2,0 },{ 2,0 }),
+    Q3BlockRendereringData({ 0, 0 },{ 0,0 },{ 0,0 },{ 0,0 },{ 0,0 },{ 0,0 })
+};
+
 void Q3World::generate()
 {
     // Lets fill the world out with empty air blocks before generating any terrain.
@@ -36,8 +41,11 @@ void Q3World::generate()
             float scaled_perlin = normalized_perlin * 15.f;
             float rounded_scaled_perlin = static_cast<float>((int)(scaled_perlin / 2) * 2);
 
-            Q3Block *block = &(m_blocks[x][rounded_scaled_perlin / 2][z]);
-
+            int y_index = rounded_scaled_perlin / 2;
+            Q3Block *block = &(m_blocks[x][y_index][z]);
+            for (int i = 0; i < y_index; i++) {
+                (m_blocks[x][i][z]).type = Q3BlockType::Dirt;
+            }
             block->position.y = rounded_scaled_perlin;
             block->type = Q3BlockType::Grass;
             block->position.x = std::round(+(x * 2.f));
@@ -99,7 +107,7 @@ void Q3World::tick(Q3Camera * camera, Q3Window * window)
 
                     if (hit != nullptr) 
                     {
-                        hit->type = Q3BlockType::Grass;
+                        hit->type = Q3BlockType::Dirt;
                         break;
                     }
                 }
@@ -192,7 +200,8 @@ void Q3WorldRenderer::render(Q3World * world, Q3Renderer *renderer)
                 // (despite them still existing as block data)
                 if (block->type != Q3BlockType::Air) 
                 {
-                    renderer->drawCube(block_pos.x, block_pos.y, block_pos.z, 1, 1, 1);
+                    Q3BlockRendereringData& data = Q3World::blocks[(int)block->type];
+                    renderer->drawCube(block_pos.x, block_pos.y, block_pos.z, 1, 1, 1, data);
                 }
             }
         }

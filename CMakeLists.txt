@@ -32,6 +32,8 @@ set(headers
     ${headers_root}/q3shared_constants.hpp
     ${headers_root}/q3texture.hpp
     ${headers_root}/q3world.hpp
+    ${headers_root}/q3block.hpp
+
 
     ${libs_root}/lodepng/lodepng.h
 )

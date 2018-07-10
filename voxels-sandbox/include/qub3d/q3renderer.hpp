@@ -1,6 +1,7 @@
 #pragma once
 
 #include <qub3d/q3camera.hpp>
+#include <qub3d/q3block.hpp>
 
 class Q3Renderer
 {
@@ -8,7 +9,7 @@ class Q3Renderer
     Q3Renderer();
 
     void clear();
-    void drawCube(float x, float y, float z, float sx, float sy, float sz);
+    void drawCube(float x, float y, float z, float sx, float sy, float sz, Q3BlockRendereringData& data);
 
     void handleCamera(Q3Camera *camera);
 
