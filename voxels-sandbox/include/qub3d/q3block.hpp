@@ -14,7 +14,7 @@ enum class Q3BlockType
 
 /*
 Stores data on how a block should be rendered,
-for example what textures it should use for front,back,top,left,right,bottom etc...
+for example the texture UVsfor front,back,top,left,right,bottom sides etc...
 */
 struct Q3BlockRendereringData {
     glm::ivec2 top_face;
@@ -26,7 +26,8 @@ struct Q3BlockRendereringData {
     glm::ivec2 forward_face;
     glm::ivec2 backward_face;
 
-
+    Q3BlockRendereringData() {}
+    
     Q3BlockRendereringData(
         const glm::ivec2& t, const glm::ivec2& bo,
         const glm::ivec2& l, const glm::ivec2& r,

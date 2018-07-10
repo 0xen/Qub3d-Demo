@@ -26,12 +26,13 @@
 #define Q3_SPRITESIZE 32
 #define Q3_NO_BLOCKS 2
 
-struct Q3SharedConstants {
+struct Q3GameConfig {
     int WindowWidth = Q3_DEFAULTWINDOWWIDTH;
     int WindowHeight = Q3_DEFAULTWINDOWHEIGHT;
 
-    static Q3SharedConstants *Get() {
-        static Q3SharedConstants c;
+    static Q3GameConfig *Get() 
+    {
+        static Q3GameConfig c;
         return &c;
     }
 };

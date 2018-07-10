@@ -33,7 +33,7 @@ Q3Renderer::Q3Renderer()
 
     s_blocks = new Q3Spritesheet("assets/blocks.png");
 
-    Q3SharedConstants *constants = Q3SharedConstants::Get();
+    Q3GameConfig *constants = Q3GameConfig::Get();
     glViewport(0, 0, constants->WindowWidth, constants->WindowHeight);
 
     s_projection = glm::perspective(Q3_FOV, (float)constants->WindowWidth / constants->WindowHeight, 0.1f, 100.0f);

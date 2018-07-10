@@ -17,10 +17,10 @@ int main(int argc, char **argv)
     srand(static_cast<unsigned int>(time(NULL)));
     SDL_Init(SDL_INIT_EVERYTHING);
 
-    Q3SharedConstants *constants = Q3SharedConstants::Get();
+    Q3GameConfig *constants = Q3GameConfig::Get();
 
     using json = nlohmann::json;
-    std::ifstream file("assets/config.json");
+    std::ifstream file("assets/config.json"); 
     std::string str((std::istreambuf_iterator<char>(file)),
         std::istreambuf_iterator<char>());
 

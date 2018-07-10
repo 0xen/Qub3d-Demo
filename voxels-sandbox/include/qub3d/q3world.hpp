@@ -10,6 +10,7 @@
 #include <qub3d/q3block.hpp>
 
 #include <array>
+#include <unordered_map>
 
 /*
 Represents the game world, storing block data and handling voxel manipulation.
@@ -18,9 +19,11 @@ Can be rendered via the Q3WorldRenderer class.
 class Q3World 
 {
 public:
-    static Q3BlockRendereringData blocks[Q3_NO_BLOCKS];
-
     typedef std::array<std::array<std::array<Q3Block, Q3_MAPSIZE>, Q3_MAPSIZE>, Q3_MAPSIZE> Q3BlocksArray;
+    typedef std::unordered_map<Q3BlockType, Q3BlockRendereringData> Q3BlockDescriptorMap;
+
+    /* A q3BlockDescriptorMap that describes each block type in the game, including how they shouold be scaled etc... */
+    static Q3BlockDescriptorMap block_descriptors;
 
     /* Generate the worlds terrain. This includes air. Can be called multiple times to regenerate the world. */
     void generate();

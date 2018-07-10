@@ -9,7 +9,7 @@
 
 Q3Camera::Q3Camera(SDL_Window *window) : m_hAngle(0.f), m_vAngle(0.f), m_position(0.f, 0.f, -10.f), m_window(window)
 {
-    Q3SharedConstants *constants = Q3SharedConstants::Get();
+    Q3GameConfig *constants = Q3GameConfig::Get();
 
     SDL_ShowCursor(0);
     SDL_WarpMouseInWindow(window, constants->WindowWidth / 2, constants->WindowHeight / 2);
@@ -27,7 +27,7 @@ bool s_isPaused = false, s_wasPaused = false;
 
 void Q3Camera::update(float dt)
 {
-    Q3SharedConstants *constants = Q3SharedConstants::Get();
+    Q3GameConfig *constants = Q3GameConfig::Get();
 
     const Uint8 *state = SDL_GetKeyboardState(NULL);
     if (!s_isPaused)
