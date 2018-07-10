@@ -7,7 +7,8 @@
 
 Q3World::Q3BlockDescriptorMap Q3World::block_descriptors = {
     std::make_pair(Q3BlockType::Grass, Q3BlockRendereringData({ 1, 0 }, { 0, 0 }, { 2,0 }, { 2, 0 }, { 2,0 }, { 2,0 })),
-    std::make_pair(Q3BlockType::Dirt,  Q3BlockRendereringData({ 0, 0 }, { 0, 0 }, { 0,0 }, { 0, 0 }, { 0,0 }, { 0,0 }))
+    std::make_pair(Q3BlockType::Dirt,  Q3BlockRendereringData({ 0, 0 }, { 0, 0 }, { 0,0 }, { 0, 0 }, { 0,0 }, { 0,0 })),
+    std::make_pair(Q3BlockType::Stone, Q3BlockRendereringData({ 3, 0 }, { 3, 0 }, { 3,0 }, { 3, 0 }, { 3,0 }, { 3,0 }))
 };
 
 void Q3World::generate()
@@ -110,7 +111,7 @@ void Q3World::tick(Q3Camera * camera, Q3Window * window)
 
                     if (hit != nullptr) 
                     {
-                        hit->type = Q3BlockType::Dirt;
+                        hit->type = Q3BlockType::Stone;
                         break;
                     }
                 }

@@ -24,7 +24,6 @@
 #define Q3_MOUSE_BUTTON_DESTROY_BLOCK SDL_BUTTON_LEFT
 
 #define Q3_SPRITESIZE 32.f
-#define Q3_NO_BLOCKS 2
 
 struct Q3GameConfig {
     int WindowWidth = Q3_DEFAULTWINDOWWIDTH;

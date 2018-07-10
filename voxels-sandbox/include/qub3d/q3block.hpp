@@ -7,9 +7,10 @@ The type of the block. A property of Q3Block
 */
 enum class Q3BlockType
 {
-    Grass = 0, 
-    Dirt = 1,
-    Air = 2
+    Grass, 
+    Dirt,
+    Air,
+    Stone
 };
 
 /*
