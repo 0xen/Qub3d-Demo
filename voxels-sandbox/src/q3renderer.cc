@@ -7,13 +7,10 @@
 
 #include <iostream>
 
-Q3Texture *s_grass_texture;
-Q3Texture *s_dirt_and_grass_texture;
 Q3Texture *s_crosshair_texture;
-Q3Texture *s_dirt_texture;
 Q3Spritesheet *s_blocks;
 
-glm::mat4 s_projection;
+glm::mat4 s_projection_matrix;
 
 Q3Renderer::Q3Renderer()
 {
@@ -22,21 +19,15 @@ Q3Renderer::Q3Renderer()
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    
-    
     glEnable(GL_TEXTURE_2D);
     
-    s_grass_texture = new Q3Texture("assets/grass.png");
-    s_dirt_and_grass_texture = new Q3Texture("assets/sideGrass.png");
     s_crosshair_texture = new Q3Texture("assets/crosshair.png");
-    s_dirt_texture = new Q3Texture("assets/dirt.png");
-
     s_blocks = new Q3Spritesheet("assets/blocks.png");
 
     Q3GameConfig *constants = Q3GameConfig::Get();
     glViewport(0, 0, constants->WindowWidth, constants->WindowHeight);
 
-    s_projection = glm::perspective(Q3_FOV, (float)constants->WindowWidth / constants->WindowHeight, 0.1f, 100.0f);
+    s_projection_matrix = glm::perspective(Q3_FOV, (float)constants->WindowWidth / constants->WindowHeight, 0.1f, 100.0f);
 }
 
 void Q3Renderer::clear()
@@ -53,8 +44,7 @@ void Q3Renderer::handleCamera(Q3Camera *camera)
 void Q3Renderer::start3d()
 {
     glMatrixMode(GL_PROJECTION);
-    glm::mat4 perspective = s_projection;
-    glLoadMatrixf(&perspective[0][0]);
+    glLoadMatrixf(&s_projection_matrix[0][0]);
     glPushMatrix();
     glMatrixMode(GL_MODELVIEW);
 }
