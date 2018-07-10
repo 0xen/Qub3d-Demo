@@ -13,6 +13,8 @@ Q3Texture *s_crosshair_texture;
 Q3Texture *s_dirt_texture;
 Q3Spritesheet *s_blocks;
 
+glm::mat4 s_projection;
+
 Q3Renderer::Q3Renderer()
 {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -21,7 +23,6 @@ Q3Renderer::Q3Renderer()
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
-    glViewport(0, 0, Q3_WINDOWWIDTH, Q3_WINDOWHEIGHT);
     
     glEnable(GL_TEXTURE_2D);
     
@@ -31,6 +32,11 @@ Q3Renderer::Q3Renderer()
     s_dirt_texture = new Q3Texture("assets/dirt.png");
 
     s_blocks = new Q3Spritesheet("assets/blocks.png");
+
+    Q3SharedConstants *constants = Q3SharedConstants::Get();
+    glViewport(0, 0, constants->WindowWidth, constants->WindowHeight);
+
+    s_projection = glm::perspective(Q3_FOV, (float)constants->WindowWidth / constants->WindowHeight, 0.1f, 100.0f);
 }
 
 void Q3Renderer::clear()
@@ -47,7 +53,7 @@ void Q3Renderer::handleCamera(Q3Camera *camera)
 void Q3Renderer::start3d()
 {
     glMatrixMode(GL_PROJECTION);
-    glm::mat4 perspective = glm::perspective(Q3_FOV, (float)Q3_WINDOWWIDTH / Q3_WINDOWHEIGHT, 0.1f, 100.0f);
+    glm::mat4 perspective = s_projection;
     glLoadMatrixf(&perspective[0][0]);
     glPushMatrix();
     glMatrixMode(GL_MODELVIEW);

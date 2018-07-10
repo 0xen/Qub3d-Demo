@@ -9,8 +9,10 @@
 
 Q3Camera::Q3Camera(SDL_Window *window) : m_hAngle(0.f), m_vAngle(0.f), m_position(0.f, 0.f, -10.f), m_window(window)
 {
+    Q3SharedConstants *constants = Q3SharedConstants::Get();
+
     SDL_ShowCursor(0);
-    SDL_WarpMouseInWindow(window, Q3_WINDOWWIDTH / 2, Q3_WINDOWHEIGHT / 2);
+    SDL_WarpMouseInWindow(window, constants->WindowWidth / 2, constants->WindowHeight / 2);
 }
 
 glm::mat4 Q3Camera::getViewMatrix()
@@ -25,15 +27,17 @@ bool s_isPaused = false, s_wasPaused = false;
 
 void Q3Camera::update(float dt)
 {
+    Q3SharedConstants *constants = Q3SharedConstants::Get();
+
     const Uint8 *state = SDL_GetKeyboardState(NULL);
     if (!s_isPaused)
     {
         int x, y;
         SDL_GetMouseState(&x, &y);
-        SDL_WarpMouseInWindow(NULL, Q3_WINDOWWIDTH / 2, Q3_WINDOWHEIGHT / 2);
+        SDL_WarpMouseInWindow(NULL, constants->WindowWidth / 2, constants->WindowHeight / 2);
 
-        m_hAngle += m_mouseSpeed * dt * float(Q3_WINDOWWIDTH / 2 - x);
-        m_vAngle += m_mouseSpeed * dt * float(Q3_WINDOWHEIGHT / 2 - y);
+        m_hAngle += m_mouseSpeed * dt * float(constants->WindowWidth / 2 - x);
+        m_vAngle += m_mouseSpeed * dt * float(constants->WindowHeight / 2 - y);
 
         m_dir = glm::vec3(
             SDL_cosf(m_vAngle) * SDL_sinf(m_hAngle),
@@ -70,7 +74,7 @@ void Q3Camera::update(float dt)
 
             if (!s_isPaused)
             {
-                SDL_WarpMouseInWindow(m_window, Q3_WINDOWWIDTH / 2, Q3_WINDOWHEIGHT / 2);
+                SDL_WarpMouseInWindow(m_window, constants->WindowWidth / 2, constants->WindowHeight / 2);
                 SDL_SetWindowTitle(m_window, Q3_WINDOWTITLE);
             }
             else

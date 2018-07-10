@@ -3,11 +3,11 @@
 //#define Q3_FULLSCREEN
 
 #ifdef Q3_FULLSCREEN
-    #define Q3_WINDOWWIDTH 1920  
-    #define Q3_WINDOWHEIGHT 1080
+    #define Q3_DEFAULTWINDOWWIDTH 1920  
+    #define Q3_DEFAULTWINDOWHEIGHT 1080
 #else
-    #define Q3_WINDOWWIDTH 640  
-    #define Q3_WINDOWHEIGHT 480
+    #define Q3_DEFAULTWINDOWWIDTH 640  
+    #define Q3_DEFAULTWINDOWHEIGHT 480
 #endif
 
 #define Q3_WINDOWTITLE "Qub3d Demo"
@@ -25,3 +25,13 @@
 
 #define Q3_SPRITESIZE 32
 #define Q3_NO_BLOCKS 2
+
+struct Q3SharedConstants {
+    int WindowWidth = Q3_DEFAULTWINDOWWIDTH;
+    int WindowHeight = Q3_DEFAULTWINDOWHEIGHT;
+
+    static Q3SharedConstants *Get() {
+        static Q3SharedConstants c;
+        return &c;
+    }
+};

@@ -34,7 +34,7 @@ set(headers
     ${headers_root}/q3world.hpp
     ${headers_root}/q3block.hpp
 
-
+    ${libs_root}/nlohmann/json.hpp
     ${libs_root}/lodepng/lodepng.h
 )
 
