@@ -20,9 +20,9 @@ void Q3World::generate()
             for (int x = 0; x < Q3_MAPSIZE; ++x) 
             {
                 Q3Block *block = &(m_blocks[x][y][z]);
-                block->position.x = x * 2;
-                block->position.y = y * 2;
-                block->position.z = z * 2;
+                block->position.x = x * 2.f;
+                block->position.y = y * 2.f;
+                block->position.z = z * 2.f;
             }
         }
     }
@@ -41,7 +41,7 @@ void Q3World::generate()
             float scaled_perlin = normalized_perlin * 15.f;
             float rounded_scaled_perlin = static_cast<float>((int)(scaled_perlin / 2) * 2);
 
-            int y_index = rounded_scaled_perlin / 2;
+            int y_index = static_cast<int>(rounded_scaled_perlin) / 2;
             Q3Block *block = &(m_blocks[x][y_index][z]);
 
             // This fills in any blocks below the newly generated one with dirt, making it look like its generated on solid land
