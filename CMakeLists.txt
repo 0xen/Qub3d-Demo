@@ -9,7 +9,9 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 # Set the root folder for actual code.
 set(demo-root demo-src)
 # Set root for the libraries required.
-set(demo-libs ${demo-root}/third_party)
+
+set(demo-libs ${demo-root}/third-party)
+
 
 # Set demo-src folder, for easier adding src files.
 set(demo-src ${demo-root}/src)
@@ -26,3 +28,12 @@ set(headers
 )
 
 add_executable(${project_name} ${src} ${headers})
+
+if(UNIX)
+    target_link_libraries(${project_name}
+        ${demo-libs}/SDL2/build/libSDL2-2.0.so
+        GL
+    )
+endif()
+
+
