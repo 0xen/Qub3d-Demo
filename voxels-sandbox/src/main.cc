@@ -54,7 +54,7 @@ int main(int argc, char **argv)
         renderer.start3d();
         {
             renderer.handleCamera(&camera);
-            world_renderer.render(&world, &renderer);
+            world_renderer.renderChunk(world.getChunks()[0], &renderer);
         }
         renderer.end3d();
 

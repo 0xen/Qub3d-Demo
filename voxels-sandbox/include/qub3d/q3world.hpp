@@ -12,6 +12,21 @@
 #include <array>
 #include <unordered_map>
 
+typedef std::array<std::array<std::array<Q3Block, Q3_MAPSIZE>, Q3_MAPSIZE>, Q3_MAPSIZE> Q3BlocksArray;
+typedef std::unordered_map<Q3BlockType, Q3BlockRendereringData> Q3BlockDescriptorMap;
+
+class Q3Chunk
+{
+public:
+    void generate();
+
+    Q3BlocksArray& getBlocksArray();
+    Q3Block *getBlockAtPos(glm::vec3 pos, bool ignoreAir);
+
+private:
+    Q3BlocksArray m_blocks;
+};
+
 /*
 Represents the game world, storing block data and handling voxel manipulation.
 Can be rendered via the Q3WorldRenderer class.
@@ -19,9 +34,7 @@ Can be rendered via the Q3WorldRenderer class.
 class Q3World 
 {
 public:
-    typedef std::array<std::array<std::array<Q3Block, Q3_MAPSIZE>, Q3_MAPSIZE>, Q3_MAPSIZE> Q3BlocksArray;
-    typedef std::unordered_map<Q3BlockType, Q3BlockRendereringData> Q3BlockDescriptorMap;
-
+    
     /* A q3BlockDescriptorMap that describes each block type in the game, including how they shouold be scaled etc... */
     static Q3BlockDescriptorMap block_descriptors;
 
@@ -32,7 +45,7 @@ public:
     void tick(Q3Camera *camera, Q3Window *window);
 
     /* Get the 3D array structure containing the block data. */
-    Q3BlocksArray& getBlocks() { return m_blocks; }
+    Q3Chunk *getChunks() { return m_chunks; }
 
 private:
     /* 
@@ -44,13 +57,14 @@ private:
     Q3Block * getBlockAtPos(glm::vec3 pos, bool ignoreAir);
 
 private:
-
-    Q3BlocksArray m_blocks;
+    Q3Chunk m_chunks[1 * 1];
+    
+    //Q3BlocksArray m_blocks;
 };
 
 class Q3WorldRenderer 
 {
 public:
     /* Draw the world to the current OpenGL context. */
-    void render(Q3World *world, Q3Renderer *renderer);
+    void renderChunk(Q3Chunk& world, Q3Renderer *renderer);
 };

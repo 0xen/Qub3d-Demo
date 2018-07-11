@@ -5,7 +5,7 @@
 #include <vector>
 #include <functional>
 
-Q3World::Q3BlockDescriptorMap Q3World::block_descriptors = {
+Q3BlockDescriptorMap Q3World::block_descriptors = {
     std::make_pair(Q3BlockType::Grass, Q3BlockRendereringData({ 1, 0 }, { 0, 0 }, { 2,0 }, { 2, 0 }, { 2,0 }, { 2,0 })),
     std::make_pair(Q3BlockType::Dirt,  Q3BlockRendereringData({ 0, 0 }, { 0, 0 }, { 0,0 }, { 0, 0 }, { 0,0 }, { 0,0 })),
     std::make_pair(Q3BlockType::Stone, Q3BlockRendereringData({ 3, 0 }, { 3, 0 }, { 3,0 }, { 3, 0 }, { 3,0 }, { 3,0 }))
@@ -13,49 +13,7 @@ Q3World::Q3BlockDescriptorMap Q3World::block_descriptors = {
 
 void Q3World::generate()
 {
-    // Fill the world out with empty air blocks before generating any terrain.
-    for (int y = 0; y < Q3_MAPSIZE; ++y) 
-    {
-        for (int z = 0; z < Q3_MAPSIZE; ++z) 
-        {
-            for (int x = 0; x < Q3_MAPSIZE; ++x) 
-            {
-                Q3Block *block = &(m_blocks[x][y][z]);
-                block->position.x = x * 2.f;
-                block->position.y = y * 2.f;
-                block->position.z = z * 2.f;
-            }
-        }
-    }
-    
-    /*
-     Now lets actually generate the terrain blocks.
-     Only places the top layer for now.
-    */
-    Q3PerlinNoiseGenerator perlin;
-    for (int z = 0; z < Q3_MAPSIZE; ++z) 
-    {
-        for (int x = 0; x < Q3_MAPSIZE; ++x) 
-        {
-            // Don't ask how this works. Please.
-            float normalized_perlin = perlin.perlin(glm::vec3((x * 2.f) / 10.f, (z * 2.f) / 10.f, 0.f));
-            float scaled_perlin = normalized_perlin * 15.f;
-            float rounded_scaled_perlin = static_cast<float>((int)(scaled_perlin / 2) * 2);
-
-            int y_index = static_cast<int>(rounded_scaled_perlin) / 2;
-            Q3Block *block = &(m_blocks[x][y_index][z]);
-
-            // This fills in any blocks below the newly generated one with dirt, making it look like its generated on solid land
-            for (int i = 0; i < y_index; i++) {
-                (m_blocks[x][i][z]).type = Q3BlockType::Dirt;
-            }
-
-            block->position.y = rounded_scaled_perlin;
-            block->type = Q3BlockType::Grass;
-            block->position.x = std::round(+(x * 2.f));
-            block->position.z = std::round(+(z * 2.f));
-        }
-    }
+    m_chunks[0].generate();
 }
 
 // These are used to keep track of is the left and right mouse buttons are being held down or not.
@@ -151,45 +109,12 @@ void Q3World::tick(Q3Camera * camera, Q3Window * window)
 
 Q3Block * Q3World::getBlockAtPos(glm::vec3 pos, bool ignoreAir)
 {
-    for (int x = 0; x < Q3_MAPSIZE; ++x) 
-    {
-        for (int y = 0; y < Q3_MAPSIZE; ++y) 
-        {
-            for (int z = 0; z < Q3_MAPSIZE; ++z) 
-            {
-                Q3Block *block = &(m_blocks[x][y][z]);
-
-                if (ignoreAir && block->type == Q3BlockType::Air) 
-                {
-                    continue;
-                }
-
-                glm::vec3 block_pos = block->position;
-                
-                // Simple AABB collision check.
-                bool point_is_inside_aabb = 
-                    pos.x > block_pos.x - 1.f && pos.x < block_pos.x + 1.f &&
-                    pos.y > block_pos.y - 1.f && pos.y < block_pos.y + 1.f &&
-                    pos.z > block_pos.z - 1.f && pos.z < block_pos.z + 1.f;
-
-                if (point_is_inside_aabb) 
-                {
-                    return &(m_blocks[x][y][z]);
-                }
-            }
-        }
-    }
-
-    /*
-    There is no block at the current position
-    or it is an air block and `ignoreAir` is set to true.
-    */
-    return nullptr;
+    return m_chunks[0].getBlockAtPos(pos, ignoreAir);
 }
 
-void Q3WorldRenderer::render(Q3World * world, Q3Renderer *renderer)
+void Q3WorldRenderer::renderChunk(Q3Chunk& chunk, Q3Renderer *renderer)
 {
-    Q3World::Q3BlocksArray& blocks = world->getBlocks();
+    Q3BlocksArray& blocks = chunk.getBlocksArray();
 
     for (int x = 0; x < Q3_MAPSIZE; x++) 
     {
@@ -210,4 +135,94 @@ void Q3WorldRenderer::render(Q3World * world, Q3Renderer *renderer)
             }
         }
     }
+}
+
+void Q3Chunk::generate()
+{
+    // Fill the world out with empty air blocks before generating any terrain.
+    for (int y = 0; y < Q3_MAPSIZE; ++y)
+    {
+        for (int z = 0; z < Q3_MAPSIZE; ++z)
+        {
+            for (int x = 0; x < Q3_MAPSIZE; ++x)
+            {
+                Q3Block *block = &(m_blocks[x][y][z]);
+                block->position.x = x * 2.f;
+                block->position.y = y * 2.f;
+                block->position.z = z * 2.f;
+            }
+        }
+    }
+
+    /*
+    Now lets actually generate the terrain blocks.
+    Only places the top layer for now.
+    */
+    Q3PerlinNoiseGenerator perlin;
+    for (int z = 0; z < Q3_MAPSIZE; ++z)
+    {
+        for (int x = 0; x < Q3_MAPSIZE; ++x)
+        {
+            // Don't ask how this works. Please.
+            float normalized_perlin = perlin.perlin(glm::vec3((x * 2.f) / 10.f, (z * 2.f) / 10.f, 0.f));
+            float scaled_perlin = normalized_perlin * 15.f;
+            float rounded_scaled_perlin = static_cast<float>((int)(scaled_perlin / 2) * 2);
+
+            int y_index = static_cast<int>(rounded_scaled_perlin) / 2;
+            Q3Block *block = &(m_blocks[x][y_index][z]);
+
+            // This fills in any blocks below the newly generated one with dirt, making it look like its generated on solid land
+            for (int i = 0; i < y_index; i++) {
+                (m_blocks[x][i][z]).type = Q3BlockType::Dirt;
+            }
+
+            block->position.y = rounded_scaled_perlin;
+            block->type = Q3BlockType::Grass;
+            block->position.x = std::round(+(x * 2.f));
+            block->position.z = std::round(+(z * 2.f));
+        }
+    }
+}
+
+Q3BlocksArray& Q3Chunk::getBlocksArray()
+{
+    return m_blocks;
+}
+
+Q3Block * Q3Chunk::getBlockAtPos(glm::vec3 pos, bool ignoreAir)
+{
+    for (int x = 0; x < Q3_MAPSIZE; ++x)
+    {
+        for (int y = 0; y < Q3_MAPSIZE; ++y)
+        {
+            for (int z = 0; z < Q3_MAPSIZE; ++z)
+            {
+                Q3Block *block = &(m_blocks[x][y][z]);
+
+                if (ignoreAir && block->type == Q3BlockType::Air)
+                {
+                    continue;
+                }
+
+                glm::vec3 block_pos = block->position;
+
+                // Simple AABB collision check.
+                bool point_is_inside_aabb =
+                    pos.x > block_pos.x - 1.f && pos.x < block_pos.x + 1.f &&
+                    pos.y > block_pos.y - 1.f && pos.y < block_pos.y + 1.f &&
+                    pos.z > block_pos.z - 1.f && pos.z < block_pos.z + 1.f;
+
+                if (point_is_inside_aabb)
+                {
+                    return &(m_blocks[x][y][z]);
+                }
+            }
+        }
+    }
+
+    /*
+    There is no block at the current position
+    or it is an air block and `ignoreAir` is set to true.
+    */
+    return nullptr;
 }
