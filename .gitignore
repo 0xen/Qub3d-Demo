@@ -1,4 +1,4 @@
-.codeblocks/
+.codeblocks/*
 .vs*/
 bin/
 *.filters
