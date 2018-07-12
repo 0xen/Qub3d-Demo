@@ -4,11 +4,22 @@
 namespace settings
 {
 
-int DEFAULTWINDOWWIDTH = 1280
-int DEFAULTWINDOWHEIGHT = 720
+const int DEFAULTWINDOWWIDTH = 1280
+const int DEFAULTWINDOWHEIGHT = 720
 
 string WINDOWTITLE = "Qub3d Demo"
 string WINDOWTITLE_PAUSED = "Qub3d Demo - Paused"
 
+struct GameConfig
+{
+    int WindowWidth = DEFAULTWINDOWWIDTH;
+    int WindowHeight = DEFAULTWINDOWHEIGHT;
+
+    static GameConfig *Get()
+    {
+        static Q3GameConfig c;
+        return &c;
+    }
+};
 
 } // namespace settings
