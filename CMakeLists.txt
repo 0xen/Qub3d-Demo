@@ -16,17 +16,21 @@ set(src_root ${code_root}/src)
 # Set src files
 set(src
     ${src_root}/main.cpp
+    ${src_root}/window.cpp
 )
 
 # Set directory for demo-headers, to aid easier adding of headers.
-set(headers_root ${code_root}/include/)
-# Set headers
-set(headers
+set(headers_root ${code_root}/include/qub3d)
 
+set(headers
+    ${headers_root}/opengl.hpp
+    ${headers_root}/window.hpp
+    ${headers_root}/settings.hpp
 )
 
 add_executable(${project_name} ${src} ${headers})
 
+include_directories(${code_root}/include)
 include_directories(${libs_root}/glm)
 include_directories(${libs_root}/SDL2/include)
 
