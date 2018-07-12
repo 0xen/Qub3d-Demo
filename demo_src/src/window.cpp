@@ -29,7 +29,7 @@ void Window::pollEvents()
     SDL_Event event;
     while (SDL_PollEvent(&event) > 0)
     {
-        if (e.type == SDL_QUIT)
+        if (event.type == SDL_QUIT)
             m_running = false;
     }
 }
