@@ -1,14 +1,14 @@
 #pragma once
-#include <strings>
+#include <string>
 
 namespace settings
 {
 
-const int DEFAULTWINDOWWIDTH = 1280
-const int DEFAULTWINDOWHEIGHT = 720
+const int DEFAULTWINDOWWIDTH = 1280;
+const int DEFAULTWINDOWHEIGHT = 720;
 
-string WINDOWTITLE = "Qub3d Demo"
-string WINDOWTITLE_PAUSED = "Qub3d Demo - Paused"
+const std::string WINDOWTITLE = "Qub3d Demo";
+const std::string WINDOWTITLE_PAUSED = "Qub3d Demo - Paused";
 
 struct GameConfig
 {
