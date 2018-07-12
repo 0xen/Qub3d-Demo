@@ -26,6 +26,9 @@ set(headers
     ${headers_root}/opengl.hpp
     ${headers_root}/window.hpp
     ${headers_root}/settings.hpp
+    
+    
+    ${headers_root}../nlohmann/json.hpp # JSON PARSING LIBRARY
 )
 
 add_executable(${project_name} ${src} ${headers})
