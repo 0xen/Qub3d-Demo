@@ -11,7 +11,7 @@ std::string str((std::istreambuf_iterator<char>(file)),
 std::istreambuf_iterator<char>());
 json config_file = json::parse(str);
 
-settings::GameConfig *configurations = settings::GameConfig::Get();
+Settings::GameConfig *configurations = Settings::GameConfig::Get();
 configurations->WindowWidth = config_file["display"]["width"];
 configurations->WindowHeight = config_file["display"]["height"];
 
