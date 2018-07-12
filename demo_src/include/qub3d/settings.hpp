@@ -17,7 +17,7 @@ struct GameConfig
 
     static GameConfig *Get()
     {
-        static Q3GameConfig c;
+        static GameConfig c;
         return &c;
     }
 };
