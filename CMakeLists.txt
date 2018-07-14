@@ -18,6 +18,7 @@ set(src_root ${code_root}/src)
 set(src
     ${src_root}/main.cpp
     ${src_root}/window.cpp
+    ${src_root}/settings.cpp
 )
 
 # The directory that contains all of the demos header files. Note this includes the `qub3d` prefix, and should not be used as part of

@@ -1,6 +1,5 @@
 #pragma once
 #include <string>
-#include <nlohmann/json.hpp>
 
 class Settings
 {
@@ -21,5 +20,7 @@ class Settings
                 static GameConfig config;
                 return &config;
             };
+
+            void LoadFromFile(const std::string& filename);
         };
 };
