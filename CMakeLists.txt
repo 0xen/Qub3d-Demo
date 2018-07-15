@@ -19,6 +19,8 @@ set(src
     ${src_root}/main.cpp
     ${src_root}/window.cpp
     ${src_root}/settings.cpp
+    ${src_root}/renderer.cpp
+    ${src_root}/camera.cpp
 )
 
 # The directory that contains all of the demos header files. Note this includes the `qub3d` prefix, and should not be used as part of
@@ -31,7 +33,9 @@ set(headers
     ${headers_root}/opengl.hpp
     ${headers_root}/window.hpp
     ${headers_root}/settings.hpp
-    
+    ${headers_root}/renderer.hpp
+    ${headers_root}/camera.hpp
+
     ${headers_root}/../nlohmann/json.hpp # JSON PARSING LIBRARY
 )
 

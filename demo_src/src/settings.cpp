@@ -2,7 +2,7 @@
 #include <nlohmann/json.hpp>
 #include <fstream>
 
-void Settings::GameConfig::LoadFromFile(const std::string& filename) 
+void Settings::GameConfig::loadFromFile(const std::string& filename)
 {
     std::ifstream file(filename);
     std::string configFileText(

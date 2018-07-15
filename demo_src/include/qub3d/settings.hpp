@@ -21,6 +21,6 @@ class Settings
                 return &config;
             };
 
-            void LoadFromFile(const std::string& filename);
+            void loadFromFile(const std::string& filename);
         };
 };
