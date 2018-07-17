@@ -1,6 +1,6 @@
 #pragma once
-#include <string>
 
+#include <qub3d/IRenderer.hpp>
 class Settings
 {
     public:
