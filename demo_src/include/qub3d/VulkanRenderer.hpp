@@ -4,5 +4,10 @@
 class VulkanRenderer : public IRenderer
 {
 public:
-	virtual void renderMesh(Mesh *mesh);
+	VulkanRenderer();
+	~VulkanRenderer();
+	virtual void render();
+private:
+	void SetupVulkan();
+	VulkanInstance * m_instance;
 };

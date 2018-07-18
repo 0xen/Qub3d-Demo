@@ -7,8 +7,9 @@ int main(int argc, char **argv)
 
 	configurations->loadFromFile("assets/config.json");
 
-	IRenderer* renderer = IRenderer::loadRenderer(GL11);
-	IWindow* window = IWindow::loadWindow(configurations, GL11);
+	IRenderer* renderer = IRenderer::loadRenderer(Vulkan);
+
+	IWindow* window = IWindow::loadWindow(configurations, Vulkan);
 
 	Mesh mesh;
 	mesh.vertices.push_back(glm::vec3(-0.5f, -0.5f, 0.f));
@@ -21,7 +22,7 @@ int main(int argc, char **argv)
 	while (window->isRunning())
 	{
 		window->pollEvents();
-		renderer->renderMesh(&mesh);
+		renderer->render();
 		window->swapBuffers();
 		window->sleep(1000 / 60.f);
 	}

@@ -19,6 +19,8 @@ struct Mesh {
 class IRenderer {
 public:
 	static IRenderer* loadRenderer(RenderingAPI api);
-    virtual void renderMesh(Mesh *mesh) = 0;
+	virtual void render() = 0;
+protected:
+	IRenderer();
 private:
 };

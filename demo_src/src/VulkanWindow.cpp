@@ -8,12 +8,8 @@ VulkanWindow::VulkanWindow(const char *title, int w, int h)
         SDL_WINDOWPOS_CENTERED,
         w,
         h,
-        SDL_WINDOW_OPENGL);
+        SDL_WINDOW_VULKAN);
 
-    m_context = SDL_GL_CreateContext(m_window);
-
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
     
     SDL_ShowWindow(m_window);
 	m_running = true;

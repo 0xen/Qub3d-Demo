@@ -15,3 +15,7 @@ IRenderer * IRenderer::loadRenderer(RenderingAPI api)
 	}
 	return nullptr;
 }
+
+IRenderer::IRenderer()
+{
+}
