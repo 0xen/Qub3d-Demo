@@ -1,7 +1,5 @@
 #pragma once
-
-#include <glm/glm.hpp>
-#include <qub3d/window.hpp>
+#include <qub3d\BUILD_ORDER.hpp>
 
 namespace q3 
 {
@@ -15,7 +13,7 @@ namespace q3
         float verticalRotation;
 
     public:
-        Camera(Window *window);
+        Camera(IWindow *window);
 
         void tick(float dt);
 
@@ -27,6 +25,6 @@ namespace q3
 
     private:
         bool m_wasPaused, m_isPaused;
-        Window *m_window;
+        IWindow *m_window;
     };
 }

@@ -1,16 +1,9 @@
-#include <qub3d/camera.hpp>
-#include <qub3d/settings.hpp>
 
-#include <SDL.h>
-
-#define _USE_MATH_DEFINES
-#include <math.h>
-
-#include <glm/gtc/matrix_transform.hpp>
+#include <qub3d\BUILD_ORDER.hpp>
 
 using namespace q3;
 
-Camera::Camera(Window *window):
+Camera::Camera(IWindow *window):
     m_isPaused(false),
     m_wasPaused(false),
     m_window(window),

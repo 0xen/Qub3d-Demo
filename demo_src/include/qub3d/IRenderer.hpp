@@ -1,7 +1,14 @@
 #pragma once
 
-#include <glm/glm.hpp>
-#include <vector>
+
+#include <qub3d/IRenderer.hpp>
+
+enum RenderingAPI
+{
+	GL11,
+	GL3,
+	Vulkan
+};
 
 struct Mesh {
     std::vector<glm::vec3> vertices;
@@ -11,11 +18,7 @@ struct Mesh {
 
 class IRenderer {
 public:
+	static IRenderer* loadRenderer(RenderingAPI api);
     virtual void renderMesh(Mesh *mesh) = 0;
 private:
-};
-
-class GL11Renderer : public IRenderer {
-public: 
-    virtual void renderMesh(Mesh *mesh);
 };

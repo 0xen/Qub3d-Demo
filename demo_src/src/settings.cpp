@@ -1,6 +1,4 @@
-#include <qub3d/settings.hpp>
-#include <nlohmann/json.hpp>
-#include <fstream>
+#include <qub3d\BUILD_ORDER.hpp>
 
 void Settings::GameConfig::loadFromFile(const std::string& filename)
 {

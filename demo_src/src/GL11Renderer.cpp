@@ -1,5 +1,4 @@
-#include <qub3d/renderer.hpp>
-#include <qub3d/opengl.hpp>
+#include <qub3d\BUILD_ORDER.hpp>
 
 void GL11Renderer::renderMesh(Mesh *mesh)
 {

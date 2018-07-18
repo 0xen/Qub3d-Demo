@@ -15,11 +15,25 @@ set(libs_root ${CMAKE_CURRENT_LIST_DIR}/demo_src/third_party)
 # The root source directory that contains all of the demos source files
 set(src_root ${code_root}/src)
 
+
+if (NOT CMAKE_VERSION VERSION_LESS 3.7.0)
+    message(STATUS "Using module to find Vulkan")
+    find_package(Vulkan)
+endif()
+
+IF (NOT Vulkan_FOUND)
+    message(STATUS "no")
+endif()
+
 set(src
     ${src_root}/main.cpp
-    ${src_root}/window.cpp
+    ${src_root}/IWindow.cpp
+    ${src_root}/GL11Window.cpp
+    ${src_root}/VulkanWindow.cpp
     ${src_root}/settings.cpp
-    ${src_root}/renderer.cpp
+    ${src_root}/IRenderer.cpp
+    ${src_root}/GL11Renderer.cpp
+    ${src_root}/VulkanRenderer.cpp
     ${src_root}/camera.cpp
 )
 
@@ -30,16 +44,32 @@ set(src
 set(headers_root ${code_root}/include/qub3d)
 
 set(headers
-    ${headers_root}/opengl.hpp
-    ${headers_root}/window.hpp
+    ${headers_root}/BUILD_ORDER.hpp
+    ${headers_root}/IWindow.hpp
+    ${headers_root}/GL11Window.hpp
+    ${headers_root}/VulkanWindow.hpp
     ${headers_root}/settings.hpp
-    ${headers_root}/renderer.hpp
+    ${headers_root}/IRenderer.hpp
+    ${headers_root}/GL11Renderer.hpp
+    ${headers_root}/VulkanRenderer.hpp
     ${headers_root}/camera.hpp
 
     ${headers_root}/../nlohmann/json.hpp # JSON PARSING LIBRARY
 )
 
 add_executable(${project_name} ${src} ${headers})
+
+source_group("Source Files\\Renderer" 
+    ${src_root}/GL11Renderer.cpp
+    ${src_root}/VulkanRenderer.cpp
+)
+
+source_group("Header Files\\Renderer"
+    ${headers_root}/IRenderer.hpp
+    ${headers_root}/GL11Renderer.hpp
+    ${headers_root}/VulkanRenderer.hpp
+)
+
 
 include_directories(${code_root}/include)
 include_directories(${libs_root}/glm)
@@ -59,6 +89,10 @@ include_directories(${libs_root}/SDL2/include)
 # Link to the SDL2 librarys we need, note now we link to the static version of SDL
 target_link_libraries(${project_name} SDL2-static)
 target_link_libraries(${project_name} SDL2main)
+
+# Link to the vulkan SDK
+find_package(Vulkan REQUIRED)
+target_link_libraries(${project_name} Vulkan::Vulkan)
 
 # Link any platform specific libraries
 if(WIN32) 
