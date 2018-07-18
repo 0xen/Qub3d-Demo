@@ -3,6 +3,13 @@
 
 #include <qub3d/IRenderer.hpp>
 
+enum RenderingAPI
+{
+	GL11,
+	GL3,
+	Vulkan
+};
+
 struct Mesh {
     std::vector<glm::vec3> vertices;
     std::vector<glm::vec2> uvs;
@@ -11,6 +18,7 @@ struct Mesh {
 
 class IRenderer {
 public:
+	static IRenderer* loadRenderer(RenderingAPI api);
     virtual void renderMesh(Mesh *mesh) = 0;
 private:
 };

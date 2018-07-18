@@ -5,6 +5,7 @@
 class IWindow
 {
 public:
+	static IWindow* loadWindow(Settings::GameConfig* config, RenderingAPI api);
 	void pollEvents();
 	void swapBuffers();
 	bool isRunning() { return m_running; };

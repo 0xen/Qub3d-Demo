@@ -31,12 +31,10 @@ set(src
     ${src_root}/GL11Window.cpp
     ${src_root}/VulkanWindow.cpp
     ${src_root}/settings.cpp
+    ${src_root}/IRenderer.cpp
     ${src_root}/GL11Renderer.cpp
-    ${src_root}/GL11Engine.cpp
     ${src_root}/VulkanRenderer.cpp
-    ${src_root}/VulkanEngine.cpp
     ${src_root}/camera.cpp
-    ${src_root}/IEngine.cpp
 )
 
 # The directory that contains all of the demos header files. Note this includes the `qub3d` prefix, and should not be used as part of
@@ -51,11 +49,8 @@ set(headers
     ${headers_root}/GL11Window.hpp
     ${headers_root}/VulkanWindow.hpp
     ${headers_root}/settings.hpp
-    ${headers_root}/IEngine.hpp
-    ${headers_root}/VulkanEngine.hpp
     ${headers_root}/IRenderer.hpp
     ${headers_root}/GL11Renderer.hpp
-    ${headers_root}/GL11Engine.hpp
     ${headers_root}/VulkanRenderer.hpp
     ${headers_root}/camera.hpp
 

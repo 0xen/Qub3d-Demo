@@ -30,16 +30,13 @@
 // Interface classes
 #include <qub3d/IRenderer.hpp>
 #include <qub3d/IWindow.hpp>
-#include <qub3d/IEngine.hpp>
 
 #include <qub3d/camera.hpp>
 
 // OpenGL Side
 #include <qub3d/GL11Window.hpp>
 #include <qub3d/GL11Renderer.hpp>
-#include <qub3d/GL11Engine.hpp>
 
 // Vulkan Side
 #include <qub3d/VulkanWindow.hpp>
 #include <qub3d/VulkanRenderer.hpp>
-#include <qub3d/VulkanEngine.hpp>
