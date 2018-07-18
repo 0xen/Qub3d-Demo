@@ -38,6 +38,7 @@ set(src
     ${src_root}/VulkanWindow.cpp
     ${src_root}/VulkanInstance.cpp
     ${src_root}/VulkanInitializers.cpp
+    ${src_root}/VulkanPhysicalDevice.cpp
 )
 
 # The directory that contains all of the demos header files. Note this includes the `qub3d` prefix, and should not be used as part of
@@ -58,6 +59,7 @@ set(headers
     ${headers_root}/VulkanWindow.hpp
     ${headers_root}/VulkanInstance.hpp
     ${headers_root}/VulkanInitializers.hpp
+    ${headers_root}/VulkanPhysicalDevice.hpp
 	
     ${headers_root}/../nlohmann/json.hpp # JSON PARSING LIBRARY
 )

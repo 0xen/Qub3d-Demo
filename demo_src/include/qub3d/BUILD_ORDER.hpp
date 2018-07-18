@@ -41,4 +41,5 @@
 #include <qub3d/VulkanInitializers.hpp>
 #include <qub3d/VulkanWindow.hpp>
 #include <qub3d/VulkanInstance.hpp>
+#include <qub3d/VulkanPhysicalDevice.hpp>
 #include <qub3d/VulkanRenderer.hpp>
