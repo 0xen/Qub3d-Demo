@@ -19,10 +19,11 @@ set(src
     ${src_root}/main.cpp
     ${src_root}/IWindow.cpp
     ${src_root}/settings.cpp
-    ${src_root}/IRenderer.cpp
     ${src_root}/camera.cpp
-    ${src_root}/GL11Window.cpp
-    ${src_root}/GL11Renderer.cpp
+
+    ${src_root}/graphics/IRenderer.cpp
+    ${src_root}/graphics/gl11/GL11Window.cpp
+    ${src_root}/graphics/gl11/GL11Renderer.cpp
 )
 
 # The directory that contains all of the demos header files. Note this includes the `qub3d` prefix, and should not be used as part of
@@ -34,12 +35,12 @@ set(headers_root ${code_root}/include/qub3d)
 set(headers
     ${headers_root}/IWindow.hpp
     ${headers_root}/settings.hpp
-    ${headers_root}/IRenderer.hpp
     ${headers_root}/camera.hpp
-    ${headers_root}/RenderingAPI.hpp
+    ${headers_root}/graphics/IRenderer.hpp
+    ${headers_root}/graphics/RenderingAPI.hpp
 
-    ${headers_root}/GL11Window.hpp
-    ${headers_root}/GL11Renderer.hpp
+    ${headers_root}/graphics/gl11/GL11Window.hpp
+    ${headers_root}/graphics/gl11/GL11Renderer.hpp
 
     ${headers_root}/../nlohmann/json.hpp # JSON PARSING LIBRARY
 )
@@ -54,19 +55,19 @@ if (NOT Vulkan_FOUND)
 else()
     add_definitions(-DQUB3D_HAS_VULKAN_SDK)
     list(APPEND src
-        ${src_root}/VulkanRenderer.cpp
-        ${src_root}/VulkanWindow.cpp
-        ${src_root}/VulkanInstance.cpp
-        ${src_root}/VulkanInitializers.cpp
-        ${src_root}/VulkanPhysicalDevice.cpp
+        ${src_root}/graphics/vulkan/VulkanRenderer.cpp
+        ${src_root}/graphics/vulkan/VulkanWindow.cpp
+        ${src_root}/graphics/vulkan/VulkanInstance.cpp
+        ${src_root}/graphics/vulkan/VulkanInitializers.cpp
+        ${src_root}/graphics/vulkan/VulkanPhysicalDevice.cpp
     )
 
     list(APPEND headers
-        ${headers_root}/VulkanRenderer.hpp
-        ${headers_root}/VulkanWindow.hpp
-        ${headers_root}/VulkanInstance.hpp
-        ${headers_root}/VulkanInitializers.hpp
-        ${headers_root}/VulkanPhysicalDevice.hpp
+        ${headers_root}/graphics/vulkan/VulkanRenderer.hpp
+        ${headers_root}/graphics/vulkan/VulkanWindow.hpp
+        ${headers_root}/graphics/vulkan/VulkanInstance.hpp
+        ${headers_root}/graphics/vulkan/VulkanInitializers.hpp
+        ${headers_root}/graphics/vulkan/VulkanPhysicalDevice.hpp
     )
 endif()
 

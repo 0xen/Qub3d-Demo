@@ -1,8 +1,8 @@
-#include <qub3d\IRenderer.hpp>
-#include <qub3d\GL11Renderer.hpp>
+#include <qub3d/graphics/IRenderer.hpp>
+#include <qub3d/graphics/gl11/GL11Renderer.hpp>
 
 #ifdef QUB3D_HAS_VULKAN_SDK 
-    #include <qub3d\VulkanRenderer.hpp>
+    #include <qub3d/graphics/vulkan/VulkanRenderer.hpp>
 #endif
 
 IRenderer * IRenderer::loadRenderer(IWindow * window, RenderingAPI api)

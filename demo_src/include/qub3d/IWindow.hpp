@@ -1,7 +1,8 @@
 #pragma once
 
-#include <qub3d\RenderingAPI.hpp>
-#include <qub3d\settings.hpp>
+#include <qub3d/graphics/RenderingAPI.hpp>
+#include <qub3d/settings.hpp>
+
 #include <SDL.h>
 #include <SDL_syswm.h>
 

@@ -1,4 +1,4 @@
-#include <qub3d\GL11Renderer.hpp>
+#include <qub3d/graphics/gl11/GL11Renderer.hpp>
 
     /*glColor3f(1.0f, 0.0f, 1.0f);
     glBegin(GL_TRIANGLES);

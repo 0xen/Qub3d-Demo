@@ -1,4 +1,4 @@
-#include <qub3d\GL11Window.hpp>
+#include <qub3d/graphics/gl11/GL11Window.hpp>
 
 GL11Window::GL11Window(const char *title, int w, int h)
 {

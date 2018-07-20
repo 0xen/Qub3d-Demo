@@ -1,8 +1,6 @@
-
-#include <qub3d\settings.hpp>
-#include <qub3d\IWindow.hpp>
-#include <qub3d\IRenderer.hpp>
-
+#include <qub3d/settings.hpp>
+#include <qub3d/IWindow.hpp>
+#include <qub3d/graphics/IRenderer.hpp>
 
 int main(int argc, char **argv)
 {

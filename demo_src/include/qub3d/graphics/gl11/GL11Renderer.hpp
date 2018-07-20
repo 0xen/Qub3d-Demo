@@ -1,6 +1,6 @@
 #pragma once
 
-#include <qub3d\IRenderer.hpp>
+#include <qub3d/graphics/IRenderer.hpp>
 
 class GL11Renderer : public IRenderer
 {

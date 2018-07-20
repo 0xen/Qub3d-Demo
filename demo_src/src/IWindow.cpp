@@ -1,5 +1,5 @@
-#include <qub3d\IWindow.hpp>
-#include <qub3d\GL11Window.hpp>
+#include <qub3d/IWindow.hpp>
+#include <qub3d/graphics/gl11/GL11Window.hpp>
 
 #ifdef QUB3D_HAS_VULKAN_SDK
     #include <qub3d\VulkanWindow.hpp>
