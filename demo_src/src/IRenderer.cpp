@@ -1,6 +1,9 @@
 #include <qub3d\IRenderer.hpp>
 #include <qub3d\GL11Renderer.hpp>
-#include <qub3d\VulkanRenderer.hpp>
+
+#ifdef QUB3D_HAS_VULKAN_SDK 
+    #include <qub3d\VulkanRenderer.hpp>
+#endif
 
 IRenderer * IRenderer::loadRenderer(IWindow * window, RenderingAPI api)
 {
@@ -12,7 +15,12 @@ IRenderer * IRenderer::loadRenderer(IWindow * window, RenderingAPI api)
     case GL3:
         break;
     case Vulkan:
+#ifdef QUB3D_HAS_VULKAN_SDK
         return new VulkanRenderer(window);
+#else
+        // TODO: Fallthrough for no Vulkan renderer support. Cheat and use GL11 for now.
+        return new GL11Renderer();
+#endif
         break;
     }
     return nullptr;

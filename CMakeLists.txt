@@ -15,16 +15,6 @@ set(libs_root ${CMAKE_CURRENT_LIST_DIR}/demo_src/third_party)
 # The root source directory that contains all of the demos source files
 set(src_root ${code_root}/src)
 
-
-if (NOT CMAKE_VERSION VERSION_LESS 3.7.0)
-    message(STATUS "Using module to find Vulkan")
-    find_package(Vulkan)
-endif()
-
-IF (NOT Vulkan_FOUND)
-    message(STATUS "no")
-endif()
-
 set(src
     ${src_root}/main.cpp
     ${src_root}/IWindow.cpp
@@ -33,12 +23,6 @@ set(src
     ${src_root}/camera.cpp
     ${src_root}/GL11Window.cpp
     ${src_root}/GL11Renderer.cpp
-
-    ${src_root}/VulkanRenderer.cpp
-    ${src_root}/VulkanWindow.cpp
-    ${src_root}/VulkanInstance.cpp
-    ${src_root}/VulkanInitializers.cpp
-    ${src_root}/VulkanPhysicalDevice.cpp
 )
 
 # The directory that contains all of the demos header files. Note this includes the `qub3d` prefix, and should not be used as part of
@@ -57,28 +41,47 @@ set(headers
     ${headers_root}/GL11Window.hpp
     ${headers_root}/GL11Renderer.hpp
 
-    ${headers_root}/VulkanRenderer.hpp
-    ${headers_root}/VulkanWindow.hpp
-    ${headers_root}/VulkanInstance.hpp
-    ${headers_root}/VulkanInitializers.hpp
-    ${headers_root}/VulkanPhysicalDevice.hpp
-	
     ${headers_root}/../nlohmann/json.hpp # JSON PARSING LIBRARY
 )
 
+if (NOT CMAKE_VERSION VERSION_LESS 3.7.0)
+    message(STATUS "Using module to find Vulkan")
+    find_package(Vulkan QUIET)
+endif()
+
+if (NOT Vulkan_FOUND)
+    message(WARNING "Vulkan SDK cannot be found. Using OpenGL renderer backend instead.")
+else()
+    add_definitions(-DQUB3D_HAS_VULKAN_SDK)
+    list(APPEND src
+        ${src_root}/VulkanRenderer.cpp
+        ${src_root}/VulkanWindow.cpp
+        ${src_root}/VulkanInstance.cpp
+        ${src_root}/VulkanInitializers.cpp
+        ${src_root}/VulkanPhysicalDevice.cpp
+    )
+
+    list(APPEND headers
+        ${headers_root}/VulkanRenderer.hpp
+        ${headers_root}/VulkanWindow.hpp
+        ${headers_root}/VulkanInstance.hpp
+        ${headers_root}/VulkanInitializers.hpp
+        ${headers_root}/VulkanPhysicalDevice.hpp
+    )
+endif()
+
 add_executable(${project_name} ${src} ${headers})
 
-source_group("Source Files\\Renderer" 
+source_group("Source Files\\Renderer" FILES
     ${src_root}/GL11Renderer.cpp
     ${src_root}/VulkanRenderer.cpp
 )
 
-source_group("Header Files\\Renderer"
+source_group("Header Files\\Renderer" FILES
     ${headers_root}/IRenderer.hpp
     ${headers_root}/GL11Renderer.hpp
     ${headers_root}/VulkanRenderer.hpp
 )
-
 
 include_directories(${code_root}/include)
 include_directories(${libs_root}/glm)
@@ -99,9 +102,9 @@ include_directories(${libs_root}/SDL2/include)
 target_link_libraries(${project_name} SDL2-static)
 target_link_libraries(${project_name} SDL2main)
 
-# Link to the vulkan SDK
-find_package(Vulkan REQUIRED)
-target_link_libraries(${project_name} Vulkan::Vulkan)
+if (Vulkan_FOUND)
+    target_link_libraries(${project_name} Vulkan::Vulkan)
+endif()
 
 # Link any platform specific libraries
 if(WIN32) 

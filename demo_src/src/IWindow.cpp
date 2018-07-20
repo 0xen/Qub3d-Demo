@@ -1,6 +1,9 @@
 #include <qub3d\IWindow.hpp>
 #include <qub3d\GL11Window.hpp>
-#include <qub3d\VulkanWindow.hpp>
+
+#ifdef QUB3D_HAS_VULKAN_SDK
+    #include <qub3d\VulkanWindow.hpp>
+#endif
 
 void IWindow::sleep(float t)
 {
@@ -17,7 +20,13 @@ IWindow * IWindow::loadWindow(Settings::GameConfig * config, RenderingAPI api)
     case GL3:
         break;
     case Vulkan:
+#ifdef QUB3D_HAS_VULKAN_SDK
         return new VulkanWindow("Qub3d", config->WindowWidth, config->WindowHeight);
+#else
+        // TODO: Fallthrough for no vulkan window support. Cheat and use GL11 for now.
+        return new GL11Window("Qub3d", config->WindowWidth, config->WindowHeight);
+#endif
+
         break;
     }
     return nullptr;
