@@ -1,5 +1,10 @@
 #pragma once
-#include <qub3d\BUILD_ORDER.hpp>
+
+#include <qub3d\IWindow.hpp>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#define _USE_MATH_DEFINES
+#include <math.h>
 
 namespace q3 
 {

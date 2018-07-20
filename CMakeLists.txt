@@ -48,13 +48,15 @@ set(src
 set(headers_root ${code_root}/include/qub3d)
 
 set(headers
-    ${headers_root}/BUILD_ORDER.hpp
     ${headers_root}/IWindow.hpp
     ${headers_root}/settings.hpp
     ${headers_root}/IRenderer.hpp
     ${headers_root}/camera.hpp
+    ${headers_root}/RenderingAPI.hpp
+
     ${headers_root}/GL11Window.hpp
     ${headers_root}/GL11Renderer.hpp
+
     ${headers_root}/VulkanRenderer.hpp
     ${headers_root}/VulkanWindow.hpp
     ${headers_root}/VulkanInstance.hpp

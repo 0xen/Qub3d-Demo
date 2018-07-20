@@ -1,4 +1,4 @@
-#include <qub3d\BUILD_ORDER.hpp>
+#include <qub3d\GL11Window.hpp>
 
 GL11Window::GL11Window(const char *title, int w, int h)
 {
@@ -16,5 +16,5 @@ GL11Window::GL11Window(const char *title, int w, int h)
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
     
     SDL_ShowWindow(m_window);
-	m_running = true;
+    m_running = true;
 }

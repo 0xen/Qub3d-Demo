@@ -1,13 +1,21 @@
 #pragma once
-#include <qub3d\BUILD_ORDER.hpp>
+
+#define VK_USE_PLATFORM_WIN32_KHR
+#include <vulkan/vulkan.h>
+#include <qub3d\VulkanInstance.hpp>
+#include <qub3d\IRenderer.hpp>
+#include <qub3d\VulkanWindow.hpp>
+#include <qub3d\VulkanPhysicalDevice.hpp>
 
 class VulkanRenderer : public IRenderer
 {
 public:
-	VulkanRenderer();
-	~VulkanRenderer();
-	virtual void render();
+    VulkanRenderer(IWindow* window);
+    ~VulkanRenderer();
+    virtual void render();
 private:
-	void SetupVulkan();
-	VulkanInstance * m_instance;
+    void setupVulkan();
+    VulkanInstance * m_instance;
+    VulkanWindow* m_window;
+    VulkanPhysicalDevice* m_pdevice;
 };

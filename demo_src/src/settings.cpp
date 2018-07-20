@@ -1,4 +1,4 @@
-#include <qub3d\BUILD_ORDER.hpp>
+#include <qub3d\settings.hpp>
 
 void Settings::GameConfig::loadFromFile(const std::string& filename)
 {
