@@ -1,4 +1,6 @@
-#include <qub3d\BUILD_ORDER.hpp>
+#include <qub3d\IWindow.hpp>
+#include <qub3d\GL11Window.hpp>
+#include <qub3d\VulkanWindow.hpp>
 
 void IWindow::sleep(float t)
 {
@@ -7,18 +9,18 @@ void IWindow::sleep(float t)
 
 IWindow * IWindow::loadWindow(Settings::GameConfig * config, RenderingAPI api)
 {
-	switch (api)
-	{
-	case GL11:
-		return new GL11Window("Qub3d", config->WindowWidth, config->WindowHeight);
-		break;
-	case GL3:
-		break;
-	case Vulkan:
-		return new VulkanWindow("Qub3d", config->WindowWidth, config->WindowHeight);
-		break;
-	}
-	return nullptr;
+    switch (api)
+    {
+    case GL11:
+        return new GL11Window("Qub3d", config->WindowWidth, config->WindowHeight);
+        break;
+    case GL3:
+        break;
+    case Vulkan:
+        return new VulkanWindow("Qub3d", config->WindowWidth, config->WindowHeight);
+        break;
+    }
+    return nullptr;
 }
 
 void IWindow::pollEvents()

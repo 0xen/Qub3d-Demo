@@ -1,8 +1,6 @@
-#include <qub3d\BUILD_ORDER.hpp>
+#include <qub3d\GL11Renderer.hpp>
 
-void GL11Renderer::renderMesh(Mesh *mesh)
-{
-    glColor3f(1.0f, 0.0f, 1.0f);
+    /*glColor3f(1.0f, 0.0f, 1.0f);
     glBegin(GL_TRIANGLES);
     for (int i = 0; i < mesh->indices.size(); i++) 
     {
@@ -11,5 +9,8 @@ void GL11Renderer::renderMesh(Mesh *mesh)
 
         glVertex3f(pos.x, pos.y, pos.z);
     }
-    glEnd();
+    glEnd();*/
+
+void GL11Renderer::render()
+{
 }

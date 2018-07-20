@@ -1,9 +1,10 @@
 #pragma once
 
-#include <qub3d\BUILD_ORDER.hpp>
+#include <qub3d\IRenderer.hpp>
 
 class GL11Renderer : public IRenderer
 {
 public:
-	virtual void renderMesh(Mesh *mesh);
+    virtual void render();
+private:
 };

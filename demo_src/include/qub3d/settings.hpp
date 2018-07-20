@@ -1,6 +1,9 @@
 #pragma once
 
-#include <qub3d/IRenderer.hpp>
+#include <fstream>
+#include <string>
+#include <nlohmann/json.hpp>
+
 class Settings
 {
     public:
