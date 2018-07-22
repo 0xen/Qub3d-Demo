@@ -1,6 +1,5 @@
 #pragma once
 
-#define VK_USE_PLATFORM_WIN32_KHR
 #include <vulkan/vulkan.h>
 
 #include <viking/vulkan/VulkanInstance.hpp>
@@ -11,7 +10,7 @@
 
 namespace viking { namespace vulkan
 {
-    class VulkanRenderer : public IRenderer
+    class VulkanRenderer /*: public IRenderer*/
     {
     public:
    //     VulkanRenderer(IWindow* window);

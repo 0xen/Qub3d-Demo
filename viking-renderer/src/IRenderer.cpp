@@ -2,7 +2,7 @@
 
 using namespace viking;
 
-IRenderer* IRenderer::createRenderer(const API& api)
+IRenderer* Renderer::createRenderer(const API& api)
 {
 	switch(api)
 	{

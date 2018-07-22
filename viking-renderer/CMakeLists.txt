@@ -3,12 +3,14 @@ project(Viking)
 set(common_source
 	src/IRenderer.cpp
     src/SDLWindowProvider.cpp
+    src/IRenderingSurface.cpp
 )
 
 set(common_headers
 	include/viking/API.hpp
 	include/viking/IRenderer.hpp
     include/viking/SDLWindowProvider.hpp
+    include/viking/IRenderingSurface.hpp
 )
 
 include_directories(include)
@@ -28,11 +30,18 @@ find_package(Vulkan)
 if(Vulkan_FOUND)
     add_definitions(-DVIKING_SUPPORTS_VULKAN)
 
+    if(WIN32)
+        add_definitions(-DVK_USE_PLATFORM_WIN32_KHR)
+    else()
+        message(FATAL "Vulkan is not currently supported on non windows platforms... Sorry :(")
+    endif()
+
     set(vulkan_source
        src/vulkan/VulkanInitializers.cpp
        src/vulkan/VulkanInstance.cpp
        src/vulkan/VulkanPhysicalDevice.cpp
        src/vulkan/VulkanRenderer.cpp
+       src/vulkan/VulkanRenderingSurface.cpp
     )
 
     set(vulkan_headers
@@ -40,6 +49,7 @@ if(Vulkan_FOUND)
         include/viking/vulkan/VulkanInstance.hpp
         include/viking/vulkan/VulkanPhysicalDevice.hpp
         include/viking/vulkan/VulkanRenderer.hpp
+        include/viking/vulkan/VulkanRenderingSurface.hpp
     )
 
     include_directories(${Vulkan_INCLUDE_DIRS})

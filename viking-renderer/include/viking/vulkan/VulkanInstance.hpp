@@ -1,8 +1,6 @@
 #pragma once
 
 #include <vector>
-
-#define VK_USE_PLATFORM_WIN32_KHR
 #include <vulkan/vulkan.hpp>
 
 #include <viking/vulkan/VulkanInstance.hpp>
