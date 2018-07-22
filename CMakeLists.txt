@@ -6,14 +6,17 @@ project(${project_name})
 # This just groups some CMake targets into a folder
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
+# Now SDL2 is built automatically as part of the Qub3d Demo and does not need to be built seperatly
+add_subdirectory(third_party/SDL2)
+
+# This places the SDL dependencies into nice folders in visual studio (keeps things tidy)
+set_target_properties (SDL2 PROPERTIES FOLDER "Third Party/SDL2")
+set_target_properties (SDL2main PROPERTIES FOLDER "Third Party/SDL2")
+set_target_properties (SDL2-static PROPERTIES FOLDER "Third Party/SDL2")
+set_target_properties (uninstall PROPERTIES FOLDER "Third Party/SDL2")
+
+# This needs to come after the `add_subdirectory(.../SDL2)` because SDL sets up some include directories internally
+include_directories(third_party/SDL2/include)
+
 add_subdirectory(viking-renderer)
-
-add_definitions(-DVIKING_SUPPORTS_GL11 -DVIKING_SUPPORTS_GL3)
-
-find_package(Vulkan QUIET)
-
-if(Vulkan_FOUND)
-    add_definitions(-DVIKING_SUPPORTS_VULKAN)
-else()
-    message(WARNING "The Vulkan SDK cannot be found. Not compiling vulkan backend")
-endif()
+add_subdirectory(qub3d-demo)
