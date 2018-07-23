@@ -2,17 +2,17 @@
 
 using namespace viking;
 
-IRenderer* Renderer::createRenderer(const API& api)
+IRenderer* IRenderer::createRenderer(const RenderingAPI& api)
 {
 	switch(api)
 	{
-		case API::GL3: 
+		case RenderingAPI::GL3: 
 			return nullptr;
 
-		case API::GL11:
+		case RenderingAPI::GL11:
 			return nullptr;
 
-		case API::Vulkan:
+		case RenderingAPI::Vulkan:
 			return nullptr;
 	}
 

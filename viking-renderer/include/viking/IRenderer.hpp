@@ -10,12 +10,7 @@ namespace viking
 	public:
         IRenderingSurface * createSurface();
 
+		static IRenderer* createRenderer(const RenderingAPI& api);
 	private:
 	};
-
-    class Renderer
-    {
-    public:
-		static IRenderer* createRenderer(const API& api);
-    };
 }

@@ -2,10 +2,14 @@
 
 namespace viking 
 {
-	enum class API
+	enum class RenderingAPI
 	{
-	    GL11,
-	    GL3,
-	    Vulkan
+		GL11,
+		GL3,
+		Vulkan
+	};
+	enum class WindowingAPI
+	{
+		SDL
 	};
 }

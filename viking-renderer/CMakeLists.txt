@@ -2,15 +2,20 @@ project(Viking)
 
 set(common_source
 	src/IRenderer.cpp
-    src/SDLWindowProvider.cpp
     src/IRenderingSurface.cpp
+    src/IWindow.cpp
+    src/SDLWindow.cpp
+    src/VulkanSDLWindow.cpp
 )
 
 set(common_headers
 	include/viking/API.hpp
 	include/viking/IRenderer.hpp
-    include/viking/SDLWindowProvider.hpp
+    include/viking/WindowDescriptor.hpp
     include/viking/IRenderingSurface.hpp
+    include/viking/IWindow.hpp
+    include/viking/SDLWindow.hpp
+    include/viking/VulkanSDLWindow.hpp
 )
 
 include_directories(include)
