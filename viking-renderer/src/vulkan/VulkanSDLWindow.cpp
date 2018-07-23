@@ -14,4 +14,10 @@ VulkanSDLWindow::VulkanSDLWindow(WindowDescriptor descriptor) : SDLWindow(Window
 	);
 	SDL_ShowWindow(m_window);
 	m_running = true;
+
+	SDL_Vulkan_GetInstanceExtensions(m_window, &m_extension_count, NULL);
+
+	m_extentions = new const char *[m_extension_count];
+
+	SDL_Vulkan_GetInstanceExtensions(m_window, &m_extension_count, m_extentions);
 }

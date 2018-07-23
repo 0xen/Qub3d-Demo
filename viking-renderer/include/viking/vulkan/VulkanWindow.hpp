@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vulkan/vulkan.h>
+#include <SDL_vulkan.h>
 /*
 #include <cassert>
 #define VK_USE_PLATFORM_WIN32_KHR
@@ -15,8 +17,11 @@ namespace viking {
 		public:
 			VulkanWindow();
 			~VulkanWindow();
-		private:
-			//VkSurfaceKHR m_surface;
+			const char** getExtensions();
+			unsigned int getExtensionsCount();
+		protected:
+			uint32_t m_extension_count;
+			const char** m_extentions = NULL;
 		};
 	}
 }

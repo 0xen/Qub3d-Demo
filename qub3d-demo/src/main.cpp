@@ -15,7 +15,7 @@ int main(int argc, char **argv)
 
     IRenderer *renderer = IRenderer::createRenderer(window, renderingApi);
 
-
+	
 
 	while (window->isRunning())
 	{

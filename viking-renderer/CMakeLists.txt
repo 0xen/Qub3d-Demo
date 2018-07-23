@@ -1,4 +1,5 @@
-project(Viking)
+set(project_name Viking)
+project(${project_name})
 
 set(common_source
 	src/IRenderer.cpp
