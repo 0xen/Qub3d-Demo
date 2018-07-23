@@ -1,7 +1,10 @@
 
-#include <viking/VulkanSDLWindow.hpp>
+#include <viking/vulkan/VulkanSDLWindow.hpp>
 
-viking::VulkanSDLWindow::VulkanSDLWindow(WindowDescriptor descriptor)
+using namespace viking;
+using namespace viking::vulkan;
+
+VulkanSDLWindow::VulkanSDLWindow(WindowDescriptor descriptor) : SDLWindow(WindowingAPI::SDL)
 {
 	m_window = SDL_CreateWindow(
 		descriptor.title,

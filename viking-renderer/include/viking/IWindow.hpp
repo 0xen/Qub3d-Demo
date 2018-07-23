@@ -11,5 +11,10 @@ namespace viking
 		virtual void poll() = 0;
 		virtual void swapBuffers() = 0;
 		virtual bool isRunning() = 0;
+		WindowingAPI GetWindowingAPI();
+	protected:
+		IWindow(WindowingAPI windowing_api);
+	private:
+		WindowingAPI m_windowing_api;
 	};
 }

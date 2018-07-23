@@ -1,17 +1,25 @@
 #include <viking/vulkan/VulkanRenderer.hpp>
+#include <viking/vulkan/VulkanSDLWindow.hpp>
+#include <viking/IWindow.hpp>
 
+using namespace viking;
 using namespace viking::vulkan;
-/*
+
 VulkanRenderer::VulkanRenderer(IWindow* window)
 {
-    m_window = static_cast<VulkanWindow*>(window);
+	switch (window->GetWindowingAPI())
+	{
+	case WindowingAPI::SDL:
+		m_window = (VulkanSDLWindow*)window;
+		break;
+	}
     setupVulkan();
-}*/
+}
 
 VulkanRenderer::~VulkanRenderer()
 {
-    delete m_pdevice;
-    delete m_instance;
+    //delete m_pdevice;
+    //delete m_instance;
 }
 
 void VulkanRenderer::render()

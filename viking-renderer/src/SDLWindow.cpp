@@ -1,7 +1,8 @@
 #include <viking/SDLWindow.hpp>
-#include <viking/VulkanSDLWindow.hpp>
+#include <viking/vulkan/VulkanSDLWindow.hpp>
 
 using namespace viking;
+using namespace viking::vulkan;
 
 viking::SDLWindow::~SDLWindow()
 {
@@ -39,3 +40,5 @@ bool SDLWindow::isRunning()
 {
 	return m_running;
 }
+
+viking::SDLWindow::SDLWindow(WindowingAPI windowing_api) : IWindow(windowing_api) {}

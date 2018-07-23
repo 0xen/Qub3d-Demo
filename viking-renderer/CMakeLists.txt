@@ -2,20 +2,16 @@ project(Viking)
 
 set(common_source
 	src/IRenderer.cpp
-    src/IRenderingSurface.cpp
     src/IWindow.cpp
     src/SDLWindow.cpp
-    src/VulkanSDLWindow.cpp
 )
 
 set(common_headers
 	include/viking/API.hpp
 	include/viking/IRenderer.hpp
     include/viking/WindowDescriptor.hpp
-    include/viking/IRenderingSurface.hpp
     include/viking/IWindow.hpp
     include/viking/SDLWindow.hpp
-    include/viking/VulkanSDLWindow.hpp
 )
 
 include_directories(include)
@@ -46,7 +42,8 @@ if(Vulkan_FOUND)
        src/vulkan/VulkanInstance.cpp
        src/vulkan/VulkanPhysicalDevice.cpp
        src/vulkan/VulkanRenderer.cpp
-       src/vulkan/VulkanRenderingSurface.cpp
+       src/vulkan/VulkanWindow.cpp
+       src/vulkan/VulkanSDLWindow.cpp
     )
 
     set(vulkan_headers
@@ -54,7 +51,8 @@ if(Vulkan_FOUND)
         include/viking/vulkan/VulkanInstance.hpp
         include/viking/vulkan/VulkanPhysicalDevice.hpp
         include/viking/vulkan/VulkanRenderer.hpp
-        include/viking/vulkan/VulkanRenderingSurface.hpp
+        include/viking/vulkan/VulkanWindow.hpp
+        include/viking/vulkan/VulkanSDLWindow.hpp
     )
 
     include_directories(${Vulkan_INCLUDE_DIRS})

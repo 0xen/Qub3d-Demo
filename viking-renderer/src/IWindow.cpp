@@ -13,3 +13,13 @@ IWindow * viking::IWindow::createWindow(WindowDescriptor descriptor, WindowingAP
 	}
 	return nullptr;
 }
+
+WindowingAPI viking::IWindow::GetWindowingAPI()
+{
+	return m_windowing_api;
+}
+
+viking::IWindow::IWindow(WindowingAPI windowing_api)
+{
+	m_windowing_api = windowing_api;
+}

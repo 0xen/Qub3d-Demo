@@ -17,6 +17,7 @@ namespace viking
 		virtual void swapBuffers();
 		virtual bool isRunning();
 	protected:
+		SDLWindow(WindowingAPI windowing_api);
 		SDL_Window * m_window;
 		SDL_GLContext m_context;
 		bool m_running;

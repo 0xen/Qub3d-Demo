@@ -1,6 +1,6 @@
-#include <viking/WindowDescriptor.hpp>
 #include <viking/SDLWindow.hpp>
-//#include <viking/IRenderer.hpp>
+#include <viking/IRenderer.hpp>
+#include <viking/vulkan/VulkanSDLWindow.hpp>
 
 int main(int argc, char **argv)
 {
@@ -11,9 +11,11 @@ int main(int argc, char **argv)
 
    //SDL_Window *window = SDLWindowProvider::createWindow(WindowDescriptor("Qub3d Demo", 800, 600), renderingApi);
 
-    //IRenderer *renderer = IRenderer::createRenderer(renderingApi);
-    
-	IWindow* window = IWindow::createWindow(WindowDescriptor("Qub3d Demo", 800, 600), windowApi,renderingApi);
+	IWindow* window = IWindow::createWindow(WindowDescriptor("Qub3d Demo", 800, 600), windowApi, renderingApi);
+
+    IRenderer *renderer = IRenderer::createRenderer(window, renderingApi);
+
+
 
 	while (window->isRunning())
 	{

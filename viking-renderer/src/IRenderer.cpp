@@ -1,8 +1,9 @@
 #include <viking/IRenderer.hpp>
+#include <viking/vulkan/VulkanRenderer.hpp>
 
 using namespace viking;
 
-IRenderer* IRenderer::createRenderer(const RenderingAPI& api)
+IRenderer* IRenderer::createRenderer(IWindow* window, const RenderingAPI& api)
 {
 	switch(api)
 	{
@@ -13,7 +14,7 @@ IRenderer* IRenderer::createRenderer(const RenderingAPI& api)
 			return nullptr;
 
 		case RenderingAPI::Vulkan:
-			return nullptr;
+			return new vulkan::VulkanRenderer(window);
 	}
 
 	return nullptr;

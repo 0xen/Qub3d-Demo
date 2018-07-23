@@ -1,16 +1,15 @@
 #pragma once
 
+#include <viking/IWindow.hpp>
 #include <viking/API.hpp>
-#include <viking/IRenderingSurface.hpp>
 
 namespace viking 
 {
 	class IRenderer
 	{
 	public:
-        IRenderingSurface * createSurface();
 
-		static IRenderer* createRenderer(const RenderingAPI& api);
+		static IRenderer* createRenderer(IWindow* window,const RenderingAPI& api);
 	private:
 	};
 }
