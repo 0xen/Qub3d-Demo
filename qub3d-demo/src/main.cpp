@@ -13,7 +13,7 @@ int main(int argc, char **argv)
 
     //IRenderer *renderer = IRenderer::createRenderer(renderingApi);
     
-	SDLWindow* window = (SDLWindow*)IWindow::createWindow(WindowDescriptor("Qub3d Demo", 800, 600), windowApi,renderingApi);
+	IWindow* window = IWindow::createWindow(WindowDescriptor("Qub3d Demo", 800, 600), windowApi,renderingApi);
 
 	while (window->isRunning())
 	{
