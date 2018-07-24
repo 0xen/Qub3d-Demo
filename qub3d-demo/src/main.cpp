@@ -9,13 +9,12 @@ int main(int argc, char **argv)
 	const RenderingAPI renderingApi = RenderingAPI::Vulkan;
 	const WindowingAPI windowApi = WindowingAPI::SDL;
 
-   //SDL_Window *window = SDLWindowProvider::createWindow(WindowDescriptor("Qub3d Demo", 800, 600), renderingApi);
-
 	IWindow* window = IWindow::createWindow(WindowDescriptor("Qub3d Demo", 800, 600), windowApi, renderingApi);
 
-    IRenderer *renderer = IRenderer::createRenderer(window, renderingApi);
+    IRenderer *renderer = IRenderer::createRenderer(renderingApi);
+	renderer->addWindow(window);
+	renderer->start();
 
-	
 
 	while (window->isRunning())
 	{

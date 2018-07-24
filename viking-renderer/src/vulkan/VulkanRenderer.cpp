@@ -5,15 +5,9 @@
 using namespace viking;
 using namespace viking::vulkan;
 
-VulkanRenderer::VulkanRenderer(IWindow* window)
+VulkanRenderer::VulkanRenderer()
 {
-	switch (window->GetWindowingAPI())
-	{
-	case WindowingAPI::SDL:
-		m_window = static_cast<vulkan::VulkanSDLWindow*>(window);
-		break;
-	}
-    setupVulkan();
+
 }
 
 VulkanRenderer::~VulkanRenderer()
@@ -26,6 +20,18 @@ void VulkanRenderer::render()
 {
 }
 
+void viking::vulkan::VulkanRenderer::start()
+{
+	switch (m_window->GetWindowingAPI())
+	{
+	case WindowingAPI::SDL:
+		m_vulkan_window = static_cast<vulkan::VulkanSDLWindow*>(m_window);
+		m_vulkan_surface = static_cast<vulkan::VulkanSDLWindow*>(m_window);
+		break;
+	}
+	setupVulkan();
+}
+
 void VulkanRenderer::setupVulkan()
 {
     m_instance = new VulkanInstance();
@@ -33,15 +39,15 @@ void VulkanRenderer::setupVulkan()
     const char** extentions = NULL;
     unsigned int count = 0;
     // Get the total count of all required extentions
-	count = m_window->getExtensionsCount();
+	count = m_vulkan_window->getExtensionsCount();
 
     // Add them to the instance
     for (unsigned int i = 0; i < count; i++)
     {
-        m_instance->addExtenstion(m_window->getExtensions()[i]);
+        m_instance->addExtenstion(m_vulkan_window->getExtensions()[i]);
     }
 
     m_instance->start();
-    /*m_window->initilizeSurface(m_instance->getInstance());
-    m_pdevice = VulkanPhysicalDevice::getSuitablePhysicalDevice(m_instance->getInstance(), m_window->getSurface());*/
+	m_vulkan_surface->initilizeSurface(m_window, m_instance->getInstance());
+    //m_pdevice = VulkanPhysicalDevice::getSuitablePhysicalDevice(m_instance->getInstance(), m_window->getSurface());*/
 }

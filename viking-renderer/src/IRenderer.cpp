@@ -3,7 +3,7 @@
 
 using namespace viking;
 
-IRenderer* IRenderer::createRenderer(IWindow* window, const RenderingAPI& api)
+IRenderer* IRenderer::createRenderer(const RenderingAPI& api)
 {
 	switch(api)
 	{
@@ -14,8 +14,13 @@ IRenderer* IRenderer::createRenderer(IWindow* window, const RenderingAPI& api)
 			return nullptr;
 
 		case RenderingAPI::Vulkan:
-			return new vulkan::VulkanRenderer(window);
+			return new vulkan::VulkanRenderer();
 	}
 
 	return nullptr;
+}
+
+void IRenderer::addWindow(IWindow* window)
+{
+	m_window = window;
 }

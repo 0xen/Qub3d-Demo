@@ -22,6 +22,7 @@ namespace viking {
 		protected:
 			uint32_t m_extension_count;
 			const char** m_extentions = NULL;
+			VkSurfaceKHR m_surface;
 		};
 	}
 }

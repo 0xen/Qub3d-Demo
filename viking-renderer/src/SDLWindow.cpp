@@ -41,4 +41,9 @@ bool SDLWindow::isRunning()
 	return m_running;
 }
 
+SDL_Window * viking::SDLWindow::GetSDLWindow()
+{
+	return m_window;
+}
+
 viking::SDLWindow::SDLWindow(WindowingAPI windowing_api) : IWindow(windowing_api) {}

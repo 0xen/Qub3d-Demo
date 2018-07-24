@@ -3,9 +3,9 @@
 #include <vulkan/vulkan.h>
 
 #include <viking/vulkan/VulkanInstance.hpp>
-//#include <viking/vulkan/VulkanRenderer.hpp>
-//#include <viking/vulkan/VulkanPhysicalDevice.hpp>
+#include <viking/vulkan/VulkanPhysicalDevice.hpp>
 #include <viking/vulkan/VulkanWindow.hpp>
+#include <viking/vulkan/IVulkanSurface.hpp>
 
 #include <viking/IRenderer.hpp>
 
@@ -14,13 +14,15 @@ namespace viking { namespace vulkan
     class VulkanRenderer : public IRenderer
     {
     public:
-        VulkanRenderer(IWindow* window);
+        VulkanRenderer();
         ~VulkanRenderer();
         virtual void render();
+		virtual void start();
     private:
         void setupVulkan();
         VulkanInstance * m_instance;
-        VulkanWindow* m_window;
+		VulkanWindow* m_vulkan_window;
+		IVulkanSurface* m_vulkan_surface;
         //VulkanPhysicalDevice* m_pdevice;
     };
 }}
