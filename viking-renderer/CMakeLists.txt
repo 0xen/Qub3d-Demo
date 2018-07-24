@@ -48,6 +48,7 @@ if(Vulkan_FOUND)
        src/vulkan/VulkanSDLWindow.cpp
        src/vulkan/IVulkanSurface.cpp
        src/vulkan/VulkanSDLSurface.cpp
+       src/vulkan/VulkanSwapchain.cpp
     )
 
     set(vulkan_headers
@@ -60,6 +61,7 @@ if(Vulkan_FOUND)
         include/viking/vulkan/VulkanSDLWindow.hpp
         include/viking/vulkan/IVulkanSurface.hpp
         include/viking/vulkan/VulkanSDLSurface.hpp
+        include/viking/vulkan/VulkanSwapchain.hpp
     )
 
     include_directories(${Vulkan_INCLUDE_DIRS})

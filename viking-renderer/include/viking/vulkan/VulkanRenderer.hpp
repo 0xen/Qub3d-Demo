@@ -7,6 +7,7 @@
 #include <viking/vulkan/VulkanDevice.hpp>
 #include <viking/vulkan/VulkanWindow.hpp>
 #include <viking/vulkan/IVulkanSurface.hpp>
+#include <viking/vulkan/VulkanSwapchain.hpp>
 
 #include <viking/IRenderer.hpp>
 
@@ -19,6 +20,9 @@ namespace viking { namespace vulkan
         ~VulkanRenderer();
         virtual void render();
 		virtual void start();
+		VulkanPhysicalDevice* GetPhysicalDevice();
+		VulkanDevice* GetDevice();
+		IVulkanSurface* GetSurface();
     private:
         void setupVulkan();
         VulkanInstance * m_instance;
@@ -26,5 +30,6 @@ namespace viking { namespace vulkan
 		IVulkanSurface* m_vulkan_surface;
 		VulkanPhysicalDevice* m_pdevice;
 		VulkanDevice* m_device;
+		VulkanSwapchain* m_swapchain;
     };
 }}

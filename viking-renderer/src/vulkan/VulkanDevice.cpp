@@ -4,6 +4,7 @@ using namespace viking::vulkan;
 
 VulkanDevice::VulkanDevice(VulkanPhysicalDevice* physical_device)
 {
+	m_physical_device = physical_device;
 	std::vector<VkDeviceQueueCreateInfo> queue_create_infos;
 	std::vector<uint32_t> unique_queue_families;
 	unique_queue_families.push_back(physical_device->getQueueFamilies()->graphics_indices);
@@ -91,4 +92,9 @@ VulkanDevice::~VulkanDevice()
 VkDevice& VulkanDevice::GetVulkanDevice()
 {
 	return m_device;
+}
+
+VulkanPhysicalDevice & viking::vulkan::VulkanDevice::GetPhysicalDevice()
+{
+	return *m_physical_device;
 }

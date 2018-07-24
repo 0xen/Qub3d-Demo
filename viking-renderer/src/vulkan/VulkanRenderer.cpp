@@ -34,6 +34,21 @@ void viking::vulkan::VulkanRenderer::start()
 	setupVulkan();
 }
 
+VulkanPhysicalDevice * viking::vulkan::VulkanRenderer::GetPhysicalDevice()
+{
+	return m_pdevice;
+}
+
+VulkanDevice * viking::vulkan::VulkanRenderer::GetDevice()
+{
+	return m_device;
+}
+
+IVulkanSurface * viking::vulkan::VulkanRenderer::GetSurface()
+{
+	return m_vulkan_surface;
+}
+
 void VulkanRenderer::setupVulkan()
 {
     m_instance = new VulkanInstance();
@@ -54,4 +69,6 @@ void VulkanRenderer::setupVulkan()
     m_pdevice = VulkanPhysicalDevice::getSuitablePhysicalDevice(m_instance->getInstance(), m_vulkan_surface->GetSurface());
 
 	m_device = new VulkanDevice(m_pdevice);
+
+	m_swapchain = new VulkanSwapchain(m_device, m_vulkan_surface);
 }
