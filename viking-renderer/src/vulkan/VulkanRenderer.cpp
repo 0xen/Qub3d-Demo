@@ -12,7 +12,7 @@ VulkanRenderer::VulkanRenderer()
 
 VulkanRenderer::~VulkanRenderer()
 {
-    //delete m_pdevice;
+    delete m_pdevice;
     delete m_instance;
 }
 
@@ -25,8 +25,9 @@ void viking::vulkan::VulkanRenderer::start()
 	switch (m_window->GetWindowingAPI())
 	{
 	case WindowingAPI::SDL:
-		m_vulkan_window = static_cast<vulkan::VulkanSDLWindow*>(m_window);
-		m_vulkan_surface = static_cast<vulkan::VulkanSDLWindow*>(m_window);
+		VulkanSDLWindow* vulkan_sdl_window = static_cast<vulkan::VulkanSDLWindow*>(m_window);
+		m_vulkan_window = vulkan_sdl_window;
+		m_vulkan_surface = vulkan_sdl_window;
 		break;
 	}
 	setupVulkan();
@@ -49,5 +50,5 @@ void VulkanRenderer::setupVulkan()
 
     m_instance->start();
 	m_vulkan_surface->initilizeSurface(m_window, m_instance->getInstance());
-    //m_pdevice = VulkanPhysicalDevice::getSuitablePhysicalDevice(m_instance->getInstance(), m_window->getSurface());*/
+    m_pdevice = VulkanPhysicalDevice::getSuitablePhysicalDevice(m_instance->getInstance(), m_vulkan_surface->GetSurface());
 }

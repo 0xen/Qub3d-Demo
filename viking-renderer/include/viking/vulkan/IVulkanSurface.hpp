@@ -11,6 +11,7 @@ namespace viking {
 		{
 		public:
 			virtual void initilizeSurface(IWindow* window, VkInstance& instance) = 0;
+			VkSurfaceKHR& GetSurface();
 		protected:
 			VkSurfaceKHR m_surface;
 		};

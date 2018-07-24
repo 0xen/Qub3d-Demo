@@ -23,6 +23,6 @@ namespace viking { namespace vulkan
         VulkanInstance * m_instance;
 		VulkanWindow* m_vulkan_window;
 		IVulkanSurface* m_vulkan_surface;
-        //VulkanPhysicalDevice* m_pdevice;
+        VulkanPhysicalDevice* m_pdevice;
     };
 }}
