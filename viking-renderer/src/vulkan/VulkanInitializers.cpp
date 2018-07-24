@@ -30,3 +30,34 @@ VkInstanceCreateInfo VulkanInitializers::instanceCreateInfo(VkApplicationInfo & 
     create_info.ppEnabledLayerNames = instance_layers.data();
     return create_info;
 }
+
+VkDeviceCreateInfo viking::vulkan::VulkanInitializers::deviceCreateInfo(std::vector<VkDeviceQueueCreateInfo>& queue_create_infos, const std::vector<const char*>& device_extensions, VkPhysicalDeviceFeatures & device_features)
+{
+	VkDeviceCreateInfo create_info = {};
+	create_info.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
+	create_info.pQueueCreateInfos = queue_create_infos.data();
+	create_info.queueCreateInfoCount = static_cast<uint32_t>(queue_create_infos.size());
+	create_info.pEnabledFeatures = &device_features;
+	create_info.enabledExtensionCount = (uint32_t)device_extensions.size();
+	create_info.ppEnabledExtensionNames = device_extensions.data();
+	return create_info;
+}
+
+VkCommandPoolCreateInfo viking::vulkan::VulkanInitializers::commandPoolCreateInfo(uint32_t queue_family_index, VkCommandPoolCreateFlags flags)
+{
+	VkCommandPoolCreateInfo pool_info = {};
+	pool_info.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
+	pool_info.queueFamilyIndex = queue_family_index;
+	pool_info.flags = flags;
+	return pool_info;
+}
+
+VkDeviceQueueCreateInfo viking::vulkan::VulkanInitializers::deviceQueueCreate(uint32_t queue_family_index, float queue_priority)
+{
+	VkDeviceQueueCreateInfo queue_create_info = {};
+	queue_create_info.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+	queue_create_info.queueFamilyIndex = queue_family_index;
+	queue_create_info.queueCount = 1;
+	queue_create_info.pQueuePriorities = &queue_priority;
+	return queue_create_info;
+}

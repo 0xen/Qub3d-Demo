@@ -14,14 +14,15 @@ int main(int argc, char **argv)
     IRenderer *renderer = IRenderer::createRenderer(renderingApi);
 	renderer->addWindow(window);
 	renderer->start();
-
-
+	
 	while (window->isRunning())
 	{
 		window->poll();
+		renderer->render();
 		window->swapBuffers();
 	}
 
+	delete renderer;
 	delete window;
 
     return 0;

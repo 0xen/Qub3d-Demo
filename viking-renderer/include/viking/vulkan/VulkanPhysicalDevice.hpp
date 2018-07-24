@@ -36,13 +36,19 @@ namespace viking { namespace vulkan {
         VulkanPhysicalDevice(VkPhysicalDevice device, QueueFamilyIndices queue_family);
         ~VulkanPhysicalDevice();
 
+		VkPhysicalDevice& GetPhysicalDevice();
+		QueueFamilyIndices * getQueueFamilies();
+		std::vector<const char*>& GetExtenstions();
+		VkPhysicalDeviceFeatures& GetDeviceFeatures();
+
+
         static VulkanPhysicalDevice* getSuitablePhysicalDevice(VkInstance& instance, VkSurfaceKHR& surface);
         static std::vector<VkPhysicalDevice> getPhysicalDevices(VkInstance& instance);
         static bool checkDeviceExtensionSupport(VkPhysicalDevice& device);
         static bool supportsQueueFamily(VkPhysicalDevice & device, QueueFamilyIndices & queue_family_indices, VkSurfaceKHR& surface);
 
     private:
-        std::vector<const char*> device_extensions;
+        std::vector<const char*> m_device_extensions;
 
         VkPhysicalDevice m_device;
         QueueFamilyIndices m_queue_family;

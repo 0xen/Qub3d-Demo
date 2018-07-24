@@ -12,6 +12,7 @@ VulkanRenderer::VulkanRenderer()
 
 VulkanRenderer::~VulkanRenderer()
 {
+	delete m_device;
     delete m_pdevice;
     delete m_instance;
 }
@@ -51,4 +52,6 @@ void VulkanRenderer::setupVulkan()
     m_instance->start();
 	m_vulkan_surface->initilizeSurface(m_window, m_instance->getInstance());
     m_pdevice = VulkanPhysicalDevice::getSuitablePhysicalDevice(m_instance->getInstance(), m_vulkan_surface->GetSurface());
+
+	m_device = new VulkanDevice(m_pdevice);
 }

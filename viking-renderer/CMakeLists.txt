@@ -42,6 +42,7 @@ if(Vulkan_FOUND)
        src/vulkan/VulkanInitializers.cpp
        src/vulkan/VulkanInstance.cpp
        src/vulkan/VulkanPhysicalDevice.cpp
+       src/vulkan/VulkanDevice.cpp
        src/vulkan/VulkanRenderer.cpp
        src/vulkan/VulkanWindow.cpp
        src/vulkan/VulkanSDLWindow.cpp
@@ -53,6 +54,7 @@ if(Vulkan_FOUND)
         include/viking/vulkan/VulkanInitializers.hpp
         include/viking/vulkan/VulkanInstance.hpp
         include/viking/vulkan/VulkanPhysicalDevice.hpp
+        include/viking/vulkan/VulkanDevice.hpp
         include/viking/vulkan/VulkanRenderer.hpp
         include/viking/vulkan/VulkanWindow.hpp
         include/viking/vulkan/VulkanSDLWindow.hpp

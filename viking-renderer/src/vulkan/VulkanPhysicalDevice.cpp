@@ -24,13 +24,33 @@ VulkanPhysicalDevice::VulkanPhysicalDevice(VkPhysicalDevice device, QueueFamilyI
         &m_physical_device_mem_properties
     );
 
-    device_extensions.push_back(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
+    m_device_extensions.push_back(VK_KHR_SWAPCHAIN_EXTENSION_NAME);
 
 }
 
 VulkanPhysicalDevice::~VulkanPhysicalDevice()
 {
     // Dose not need clean up
+}
+
+VkPhysicalDevice & VulkanPhysicalDevice::GetPhysicalDevice()
+{
+	return m_device;
+}
+
+QueueFamilyIndices * viking::vulkan::VulkanPhysicalDevice::getQueueFamilies()
+{
+	return &m_queue_family;
+}
+
+std::vector<const char*>& viking::vulkan::VulkanPhysicalDevice::GetExtenstions()
+{
+	return m_device_extensions;
+}
+
+VkPhysicalDeviceFeatures& viking::vulkan::VulkanPhysicalDevice::GetDeviceFeatures()
+{
+	return m_device_features;
 }
 
 VulkanPhysicalDevice* VulkanPhysicalDevice::getSuitablePhysicalDevice(VkInstance& instance, VkSurfaceKHR& surface)

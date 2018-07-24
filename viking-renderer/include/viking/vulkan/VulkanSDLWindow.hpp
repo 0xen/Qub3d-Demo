@@ -11,6 +11,7 @@ namespace viking {
 		{
 		public:
 			VulkanSDLWindow(WindowDescriptor descriptor);
+		private:
 		};
 	}
 }

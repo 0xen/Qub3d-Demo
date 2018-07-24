@@ -4,6 +4,7 @@
 
 #include <viking/vulkan/VulkanInstance.hpp>
 #include <viking/vulkan/VulkanPhysicalDevice.hpp>
+#include <viking/vulkan/VulkanDevice.hpp>
 #include <viking/vulkan/VulkanWindow.hpp>
 #include <viking/vulkan/IVulkanSurface.hpp>
 
@@ -23,6 +24,7 @@ namespace viking { namespace vulkan
         VulkanInstance * m_instance;
 		VulkanWindow* m_vulkan_window;
 		IVulkanSurface* m_vulkan_surface;
-        VulkanPhysicalDevice* m_pdevice;
+		VulkanPhysicalDevice* m_pdevice;
+		VulkanDevice* m_device;
     };
 }}
