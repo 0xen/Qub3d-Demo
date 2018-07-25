@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <array>
 #include <vulkan/vulkan.h>
 #include <viking/vulkan/VulkanCommon.hpp>
 #include <viking/vulkan/VulkanQueueFamilyIndices.hpp>
@@ -25,6 +26,10 @@ namespace viking { namespace vulkan
 		static VkSwapchainCreateInfoKHR swapchainCreateInfoKHR(VkSurfaceFormatKHR surface_format, VkExtent2D extent, VkPresentModeKHR present_mode, uint32_t image_count, VkSurfaceKHR surface, VulkanQueueFamilyIndices indices, VulkanSwapChainConfiguration swap_chain_support);
 
 		static VkImageViewCreateInfo imageViewCreate(VkImage image, VkFormat format, VkImageAspectFlags aspect_flags);
+
+		static VkSemaphoreCreateInfo semaphoreCreateInfo();
+
+		static VkRenderPassBeginInfo renderPassBeginInfo(VkRenderPass render_pass, VkExtent2D swapchain_extent, std::array<VkClearValue, 2>& clear_values);
 
 		static VkAttachmentDescription attachmentDescription(VkFormat format, VkAttachmentStoreOp store_op, VkImageLayout final_layout);
 

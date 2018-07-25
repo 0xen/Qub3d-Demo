@@ -15,6 +15,9 @@ namespace viking {
 		public:
 			VulkanSwapchain(VulkanDevice* device,IWindow* window, IVulkanSurface* surface);
 			~VulkanSwapchain();
+			void rebuildSwapchain();
+			void rebuildCommandBuffers();
+			void render();
 		private:
 			void initSwapchain();
 			void deinitSwapchain();
@@ -35,6 +38,9 @@ namespace viking {
 
 			void createCommandBuffer();
 
+			void createSemaphores();
+			void destroySemaphores();
+
 			void createImageView(VkImage image, VkFormat format, VkImageAspectFlags aspect_flags, VkImageView & view);
 
 			void getSwapChainSupport(VulkanSwapChainConfiguration & support);
@@ -54,8 +60,12 @@ namespace viking {
 			std::vector<VkImage> m_swap_chain_images;
 			std::vector<VkFramebuffer> m_swap_chain_framebuffers;
 			std::vector<VkImageView> m_swap_chain_image_views;
+			uint32_t m_active_swapchain_image;
 			VkRenderPass m_render_pass;
 			VkFormat m_depth_image_format;
+
+			VkSemaphore m_image_available_semaphore;
+			VkSemaphore m_render_finished_semaphore;
 
 			VulkanSwapChainConfiguration m_swap_chain_config;
 			VkSurfaceFormatKHR m_surface_format;

@@ -103,6 +103,25 @@ VkImageViewCreateInfo viking::vulkan::VulkanInitializers::imageViewCreate(VkImag
 	return create_info;
 }
 
+VkSemaphoreCreateInfo viking::vulkan::VulkanInitializers::semaphoreCreateInfo()
+{
+	VkSemaphoreCreateInfo semaphore_info = {};
+	semaphore_info.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
+	return semaphore_info;
+}
+
+VkRenderPassBeginInfo viking::vulkan::VulkanInitializers::renderPassBeginInfo(VkRenderPass render_pass, VkExtent2D swapchain_extent, std::array<VkClearValue, 2>& clear_values)
+{
+	VkRenderPassBeginInfo render_pass_info = {};
+	render_pass_info.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
+	render_pass_info.renderPass = render_pass;
+	render_pass_info.renderArea.offset = { 0, 0 };
+	render_pass_info.renderArea.extent = swapchain_extent;
+	render_pass_info.clearValueCount = static_cast<uint32_t>(clear_values.size());
+	render_pass_info.pClearValues = clear_values.data();
+	return render_pass_info;
+}
+
 VkAttachmentDescription viking::vulkan::VulkanInitializers::attachmentDescription(VkFormat format, VkAttachmentStoreOp store_op, VkImageLayout final_layout)
 {
 	VkAttachmentDescription color_attachment = {};

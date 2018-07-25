@@ -20,6 +20,7 @@ VulkanRenderer::~VulkanRenderer()
 
 void VulkanRenderer::render()
 {
+	m_swapchain->render();
 }
 
 void viking::vulkan::VulkanRenderer::start()

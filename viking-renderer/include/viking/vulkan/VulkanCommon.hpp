@@ -1,8 +1,6 @@
 #pragma once
 
-//#include <viking/vulkan/VulkanDevice.hpp>
 #include <vulkan/vulkan.h>
-#include <SDL_vulkan.h>
 
 namespace viking {
 	namespace vulkan {

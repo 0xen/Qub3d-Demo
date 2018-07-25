@@ -12,11 +12,128 @@ viking::vulkan::VulkanSwapchain::VulkanSwapchain(VulkanDevice* device, IWindow* 
 	m_present_mode = chooseSwapPresentMode(m_swap_chain_config.present_modes);
 	initSwapchain();
 	createCommandBuffer();
+	createSemaphores();
+	rebuildCommandBuffers();
 }
 
 viking::vulkan::VulkanSwapchain::~VulkanSwapchain()
 {
+	destroySemaphores();
 	deinitSwapchain();
+}
+
+void viking::vulkan::VulkanSwapchain::rebuildSwapchain()
+{
+	vkDeviceWaitIdle(m_device->GetVulkanDevice());
+
+	deinitSwapchain();
+
+	initSwapchain();
+
+	rebuildCommandBuffers();
+}
+
+void viking::vulkan::VulkanSwapchain::rebuildCommandBuffers()
+{
+	VkCommandBufferBeginInfo begin_info = VulkanInitializers::commandBufferBeginInfo(VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT);
+	std::array<VkClearValue, 2> clear_values;
+	clear_values[0].color = { 0.2f, 0.2f, 0.2f, 1.0f };
+	clear_values[1].depthStencil = { 1.0f, 0 };
+	VkRenderPassBeginInfo render_pass_info = VulkanInitializers::renderPassBeginInfo(m_render_pass, m_extent, clear_values);
+
+	for (uint32_t i = 0; i < m_command_buffers.size(); i++)
+	{
+		vkResetCommandBuffer(
+			m_command_buffers[i],
+			0
+		);
+		render_pass_info.framebuffer = m_swap_chain_framebuffers[i];
+
+		bool sucsess = VulkanInitializers::validate(vkBeginCommandBuffer(
+			m_command_buffers[i],
+			&begin_info
+		));
+
+		vkCmdBeginRenderPass(
+			m_command_buffers[i],
+			&render_pass_info,
+			VK_SUBPASS_CONTENTS_INLINE
+		);
+
+		// Pipeline and model code
+		/*
+		
+		*/
+
+
+		vkCmdEndRenderPass(
+			m_command_buffers[i]
+		);
+
+		sucsess = VulkanInitializers::validate(vkEndCommandBuffer(
+			m_command_buffers[i]
+		));
+	}
+
+
+
+}
+
+void viking::vulkan::VulkanSwapchain::render()
+{
+	VkResult check = vkAcquireNextImageKHR(
+		m_device->GetVulkanDevice(),
+		m_swap_chain,
+		UINT32_MAX,
+		m_image_available_semaphore,
+		VK_NULL_HANDLE,
+		&m_active_swapchain_image
+	);
+	if (check == VK_ERROR_OUT_OF_DATE_KHR)
+	{
+		rebuildSwapchain();
+		return;
+	}
+
+	vkQueueWaitIdle(
+		*m_device->GetPresentQueue()
+	);
+	VkSemaphore wait_semaphores[] = { m_image_available_semaphore };
+	VkSemaphore signal_semaphores[] = { m_render_finished_semaphore };
+	VkPipelineStageFlags wait_stages[] = { VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT };
+	VkSubmitInfo sumbit_info = {};
+	sumbit_info.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+	sumbit_info.waitSemaphoreCount = 1;
+	sumbit_info.pWaitSemaphores = wait_semaphores;
+	sumbit_info.pWaitDstStageMask = wait_stages;
+	sumbit_info.commandBufferCount = 1;
+	sumbit_info.pCommandBuffers = &m_command_buffers[m_active_swapchain_image];
+	sumbit_info.signalSemaphoreCount = 1;
+	sumbit_info.pSignalSemaphores = signal_semaphores;
+
+	bool sucsess = VulkanInitializers::validate(vkQueueSubmit(
+		*m_device->GetGraphicsQueue(),
+		1,
+		&sumbit_info,
+		VK_NULL_HANDLE
+	));
+	sucsess = VulkanInitializers::validate(vkQueueWaitIdle(*m_device->GetGraphicsQueue()));
+
+	VkResult present_result = VkResult::VK_RESULT_MAX_ENUM;
+	VkSwapchainKHR swap_chains[] = { m_swap_chain };
+	VkPresentInfoKHR present_info = {};
+	present_info.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
+	present_info.waitSemaphoreCount = 1;
+	present_info.pWaitSemaphores = signal_semaphores;
+	present_info.swapchainCount = 1;
+	present_info.pSwapchains = swap_chains;
+	present_info.pImageIndices = &m_active_swapchain_image;
+	present_info.pResults = nullptr;
+
+	vkQueuePresentKHR(
+		*m_device->GetPresentQueue(),
+		&present_info
+	);
 }
 
 void viking::vulkan::VulkanSwapchain::initSwapchain()
@@ -199,6 +316,20 @@ void viking::vulkan::VulkanSwapchain::createCommandBuffer()
 		&alloc_info,
 		m_command_buffers.data()
 	));
+}
+
+void viking::vulkan::VulkanSwapchain::createSemaphores()
+{
+	VkSemaphoreCreateInfo semaphore_info = VulkanInitializers::semaphoreCreateInfo();
+
+	bool sucsess = VulkanInitializers::validate(vkCreateSemaphore(m_device->GetVulkanDevice(), &semaphore_info, nullptr, &m_image_available_semaphore));
+	sucsess = VulkanInitializers::validate(vkCreateSemaphore(m_device->GetVulkanDevice(), &semaphore_info, nullptr, &m_render_finished_semaphore));
+}
+
+void viking::vulkan::VulkanSwapchain::destroySemaphores()
+{
+	vkDestroySemaphore(m_device->GetVulkanDevice(), m_image_available_semaphore, nullptr);
+	vkDestroySemaphore(m_device->GetVulkanDevice(), m_render_finished_semaphore, nullptr);
 }
 
 void viking::vulkan::VulkanSwapchain::createImageView(VkImage image, VkFormat format, VkImageAspectFlags aspect_flags, VkImageView & view)
