@@ -30,6 +30,8 @@ namespace viking { namespace vulkan
 
 		static VkAttachmentReference attachmentReference(VkImageLayout layout, uint32_t attachment);
 
+		static VkFramebufferCreateInfo framebufferCreateInfo(VkExtent2D& swap_chain_extent, std::vector<VkImageView>& attachments, VkRenderPass& render_pass);
+
 		static VkSubpassDescription subpassDescription(VkAttachmentReference& color_attachment_refrence, VkAttachmentReference& depth_attachment_ref);
 
 		static VkSubpassDependency subpassDependency();

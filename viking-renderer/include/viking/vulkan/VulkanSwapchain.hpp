@@ -30,6 +30,11 @@ namespace viking {
 
 			void createDepthImage();
 
+			void createFrameBuffer();
+			void destroyFrameBuffer();
+
+			void createCommandBuffer();
+
 			void createImageView(VkImage image, VkFormat format, VkImageAspectFlags aspect_flags, VkImageView & view);
 
 			void getSwapChainSupport(VulkanSwapChainConfiguration & support);
@@ -45,7 +50,9 @@ namespace viking {
 			VkImageView m_depth_image_view;
 
 			VkSwapchainKHR m_swap_chain;
+			std::vector<VkCommandBuffer> m_command_buffers;
 			std::vector<VkImage> m_swap_chain_images;
+			std::vector<VkFramebuffer> m_swap_chain_framebuffers;
 			std::vector<VkImageView> m_swap_chain_image_views;
 			VkRenderPass m_render_pass;
 			VkFormat m_depth_image_format;

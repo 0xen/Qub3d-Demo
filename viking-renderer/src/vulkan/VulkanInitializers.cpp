@@ -125,6 +125,19 @@ VkAttachmentReference viking::vulkan::VulkanInitializers::attachmentReference(Vk
 	return color_attachment_refrence;
 }
 
+VkFramebufferCreateInfo viking::vulkan::VulkanInitializers::framebufferCreateInfo(VkExtent2D & swap_chain_extent, std::vector<VkImageView>& attachments, VkRenderPass & render_pass)
+{
+	VkFramebufferCreateInfo framebuffer_info = {};
+	framebuffer_info.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
+	framebuffer_info.renderPass = render_pass;
+	framebuffer_info.attachmentCount = static_cast<uint32_t>(attachments.size());
+	framebuffer_info.pAttachments = attachments.data();
+	framebuffer_info.width = swap_chain_extent.width;
+	framebuffer_info.height = swap_chain_extent.height;
+	framebuffer_info.layers = 1;
+	return framebuffer_info;
+}
+
 VkSubpassDescription viking::vulkan::VulkanInitializers::subpassDescription(VkAttachmentReference & color_attachment_refrence, VkAttachmentReference & depth_attachment_ref)
 {
 	VkSubpassDescription subpass = {};

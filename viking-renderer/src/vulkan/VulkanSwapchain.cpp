@@ -11,6 +11,7 @@ viking::vulkan::VulkanSwapchain::VulkanSwapchain(VulkanDevice* device, IWindow* 
 	m_surface_format = chooseSwapSurfaceFormat(m_swap_chain_config.formats);
 	m_present_mode = chooseSwapPresentMode(m_swap_chain_config.present_modes);
 	initSwapchain();
+	createCommandBuffer();
 }
 
 viking::vulkan::VulkanSwapchain::~VulkanSwapchain()
@@ -24,10 +25,12 @@ void viking::vulkan::VulkanSwapchain::initSwapchain()
 	createSwapchainImages();
 	createRenderPass();
 	createDepthImage();
+	createFrameBuffer();
 }
 
 void viking::vulkan::VulkanSwapchain::deinitSwapchain()
 {
+	destroyFrameBuffer();
 	destroyRenderPass();
 	destroySwapchainImages();
 	destroySwapchain();
@@ -148,6 +151,54 @@ void viking::vulkan::VulkanSwapchain::createDepthImage()
 	VulkanCommon::createImageView(m_device, m_depth_image, m_depth_image_format, VK_IMAGE_ASPECT_DEPTH_BIT, m_depth_image_view);
 
 	VulkanCommon::transitionImageLayout(m_device, m_depth_image, m_depth_image_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL);
+}
+
+void viking::vulkan::VulkanSwapchain::createFrameBuffer()
+{
+	m_swap_chain_framebuffers.resize(m_swap_chain_image_views.size());
+	for (uint32_t i = 0; i < m_swap_chain_image_views.size(); i++)
+	{
+		// What 
+		std::vector<VkImageView> attachments = {
+			m_swap_chain_image_views[i],
+			m_depth_image_view
+		};
+		// Frame buffer create info
+		VkFramebufferCreateInfo framebuffer_info = VulkanInitializers::framebufferCreateInfo(m_extent, attachments, m_render_pass);
+
+		bool sucsess = VulkanInitializers::validate(vkCreateFramebuffer(
+			m_device->GetVulkanDevice(),
+			&framebuffer_info,
+			nullptr,
+			&m_swap_chain_framebuffers[i]
+		));
+	}
+}
+
+void viking::vulkan::VulkanSwapchain::destroyFrameBuffer()
+{
+	for (auto framebuffer : m_swap_chain_framebuffers)
+	{
+		vkDestroyFramebuffer(
+			m_device->GetVulkanDevice(),
+			framebuffer,
+			nullptr
+		);
+	}
+}
+
+void viking::vulkan::VulkanSwapchain::createCommandBuffer()
+{
+	m_command_buffers.resize(m_swap_chain_framebuffers.size());
+	VkCommandBufferAllocateInfo alloc_info = VulkanInitializers::commandBufferAllocateInfo(
+		*m_device->GetGraphicsCommandPool(),
+		static_cast<uint32_t>(m_command_buffers.size())
+	);
+	bool sucsess = VulkanInitializers::validate(vkAllocateCommandBuffers(
+		m_device->GetVulkanDevice(),
+		&alloc_info,
+		m_command_buffers.data()
+	));
 }
 
 void viking::vulkan::VulkanSwapchain::createImageView(VkImage image, VkFormat format, VkImageAspectFlags aspect_flags, VkImageView & view)
