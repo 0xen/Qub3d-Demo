@@ -22,10 +22,13 @@ void viking::vulkan::VulkanSwapchain::initSwapchain()
 {
 	createSwapchain();
 	createSwapchainImages();
+	createRenderPass();
+	createDepthImage();
 }
 
 void viking::vulkan::VulkanSwapchain::deinitSwapchain()
 {
+	destroyRenderPass();
 	destroySwapchainImages();
 	destroySwapchain();
 }
@@ -35,10 +38,9 @@ void viking::vulkan::VulkanSwapchain::createSwapchain()
 	m_extent = chooseSwapExtent(m_swap_chain_config.capabilities);
 
 	uint32_t image_count = m_swap_chain_config.capabilities.minImageCount + 1;
-	// Stay in the min max image range
+
 	if (m_swap_chain_config.capabilities.maxImageCount > 0 && image_count > m_swap_chain_config.capabilities.maxImageCount)
 		image_count = m_swap_chain_config.capabilities.maxImageCount;
-
 
 	VulkanQueueFamilyIndices* indices = m_device->GetPhysicalDevice().getQueueFamilies();
 	VkSwapchainCreateInfoKHR create_info = VulkanInitializers::swapchainCreateInfoKHR(
@@ -109,6 +111,45 @@ void viking::vulkan::VulkanSwapchain::destroySwapchainImages()
 	m_swap_chain_image_views.clear();
 }
 
+void viking::vulkan::VulkanSwapchain::createRenderPass()
+{
+	std::vector<VkAttachmentDescription> attachments = {
+		VulkanInitializers::attachmentDescription(m_surface_format.format, VK_ATTACHMENT_STORE_OP_STORE,VK_IMAGE_LAYOUT_PRESENT_SRC_KHR),
+		VulkanInitializers::attachmentDescription(getDepthImageFormat(), VK_ATTACHMENT_STORE_OP_DONT_CARE,VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL)
+	};
+
+	VkAttachmentReference color_attachment_refrence = VulkanInitializers::attachmentReference(VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL, 0);
+	VkAttachmentReference depth_attachment_refrence = VulkanInitializers::attachmentReference(VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL, 1);
+	VkSubpassDescription subpass = VulkanInitializers::subpassDescription(color_attachment_refrence, depth_attachment_refrence);
+	VkSubpassDependency subpass_dependency = VulkanInitializers::subpassDependency();
+	VkRenderPassCreateInfo render_pass_info = VulkanInitializers::renderPassCreateInfo(attachments, subpass, subpass_dependency);
+
+	bool sucsess = VulkanInitializers::validate(vkCreateRenderPass(
+		m_device->GetVulkanDevice(),
+		&render_pass_info,
+		nullptr,
+		&m_render_pass
+	));
+
+}
+
+void viking::vulkan::VulkanSwapchain::destroyRenderPass()
+{
+	vkDestroyRenderPass(
+		m_device->GetVulkanDevice(),
+		m_render_pass,
+		nullptr);
+}
+
+void viking::vulkan::VulkanSwapchain::createDepthImage()
+{
+	m_depth_image_format = getDepthImageFormat();
+	VulkanCommon::createImage(m_device, m_extent, m_depth_image_format, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, m_depth_image, m_depth_image_memory);
+	VulkanCommon::createImageView(m_device, m_depth_image, m_depth_image_format, VK_IMAGE_ASPECT_DEPTH_BIT, m_depth_image_view);
+
+	VulkanCommon::transitionImageLayout(m_device, m_depth_image, m_depth_image_format, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL);
+}
+
 void viking::vulkan::VulkanSwapchain::createImageView(VkImage image, VkFormat format, VkImageAspectFlags aspect_flags, VkImageView & view)
 {
 	VkImageViewCreateInfo create_info = VulkanInitializers::imageViewCreate(image, format, aspect_flags);
@@ -117,7 +158,7 @@ void viking::vulkan::VulkanSwapchain::createImageView(VkImage image, VkFormat fo
 		&create_info,
 		nullptr,
 		&view
-	));
+	)); 
 }
 
 void viking::vulkan::VulkanSwapchain::getSwapChainSupport(VulkanSwapChainConfiguration & support)
@@ -211,4 +252,31 @@ VkExtent2D VulkanSwapchain::chooseSwapExtent(const VkSurfaceCapabilitiesKHR & ca
 		if (extent.height < capabilities.minImageExtent.width)extent.height = capabilities.minImageExtent.height;
 		return extent;
 	}
+}
+
+VkFormat viking::vulkan::VulkanSwapchain::getDepthImageFormat()
+{
+	return selectSutableFormat(
+		{ VK_FORMAT_D32_SFLOAT, VK_FORMAT_D32_SFLOAT_S8_UINT, VK_FORMAT_D24_UNORM_S8_UINT },
+		VK_IMAGE_TILING_OPTIMAL,
+		VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT
+	);
+}
+
+VkFormat viking::vulkan::VulkanSwapchain::selectSutableFormat(const std::vector<VkFormat>& candidates, VkImageTiling tiling, VkFormatFeatureFlags features)
+{
+	for (VkFormat format : candidates)
+	{
+		VkFormatProperties props;
+		vkGetPhysicalDeviceFormatProperties(m_device->GetPhysicalDevice().GetPhysicalDevice(), format, &props);
+		if (tiling == VK_IMAGE_TILING_LINEAR && (props.linearTilingFeatures & features) == features)
+		{
+			return format;
+		}
+		else if (tiling == VK_IMAGE_TILING_OPTIMAL && (props.optimalTilingFeatures & features) == features)
+		{
+			return format;
+		}
+	}
+	return VK_FORMAT_UNDEFINED;
 }

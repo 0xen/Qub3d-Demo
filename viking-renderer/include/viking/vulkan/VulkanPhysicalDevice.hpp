@@ -20,6 +20,7 @@ namespace viking { namespace vulkan {
 		VulkanQueueFamilyIndices * getQueueFamilies();
 		std::vector<const char*>& GetExtenstions();
 		VkPhysicalDeviceFeatures& GetDeviceFeatures();
+		VkPhysicalDeviceMemoryProperties* getPhysicalDeviceMemoryProperties();
 
 
         static VulkanPhysicalDevice* getSuitablePhysicalDevice(VkInstance& instance, VkSurfaceKHR& surface);

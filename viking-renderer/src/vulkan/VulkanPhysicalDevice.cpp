@@ -53,6 +53,11 @@ VkPhysicalDeviceFeatures& viking::vulkan::VulkanPhysicalDevice::GetDeviceFeature
 	return m_device_features;
 }
 
+VkPhysicalDeviceMemoryProperties * viking::vulkan::VulkanPhysicalDevice::getPhysicalDeviceMemoryProperties()
+{
+	return &m_physical_device_mem_properties;
+}
+
 VulkanPhysicalDevice* VulkanPhysicalDevice::getSuitablePhysicalDevice(VkInstance& instance, VkSurfaceKHR& surface)
 {
     VulkanPhysicalDevice* responce = VK_NULL_HANDLE;

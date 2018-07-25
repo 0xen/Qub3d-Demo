@@ -17,7 +17,11 @@ namespace viking { namespace vulkan {
 		~VulkanDevice();
 		VkDevice& GetVulkanDevice();
 		VulkanPhysicalDevice& GetPhysicalDevice();
-
+		VkQueue* GetGraphicsQueue();
+		VkQueue* GetPresentQueue();
+		VkQueue* GetComputeQueue();
+		VkCommandPool* GetGraphicsCommandPool();
+		VkCommandPool* GetComputeCommandPool();
     private:
 		VkDevice m_device = VK_NULL_HANDLE;
 		VkQueue m_graphics_queue;

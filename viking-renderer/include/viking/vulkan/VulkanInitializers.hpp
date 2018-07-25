@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <vulkan/vulkan.h>
+#include <viking/vulkan/VulkanCommon.hpp>
 #include <viking/vulkan/VulkanQueueFamilyIndices.hpp>
 #include <viking/vulkan/VulkanSwapChainConfiguration.hpp>
 
@@ -24,6 +25,31 @@ namespace viking { namespace vulkan
 		static VkSwapchainCreateInfoKHR swapchainCreateInfoKHR(VkSurfaceFormatKHR surface_format, VkExtent2D extent, VkPresentModeKHR present_mode, uint32_t image_count, VkSurfaceKHR surface, VulkanQueueFamilyIndices indices, VulkanSwapChainConfiguration swap_chain_support);
 
 		static VkImageViewCreateInfo imageViewCreate(VkImage image, VkFormat format, VkImageAspectFlags aspect_flags);
+
+		static VkAttachmentDescription attachmentDescription(VkFormat format, VkAttachmentStoreOp store_op, VkImageLayout final_layout);
+
+		static VkAttachmentReference attachmentReference(VkImageLayout layout, uint32_t attachment);
+
+		static VkSubpassDescription subpassDescription(VkAttachmentReference& color_attachment_refrence, VkAttachmentReference& depth_attachment_ref);
+
+		static VkSubpassDependency subpassDependency();
+
+		static VkRenderPassCreateInfo renderPassCreateInfo(std::vector<VkAttachmentDescription>& attachments, VkSubpassDescription& subpass, VkSubpassDependency& subpass_dependency);
+
+		static VkImageCreateInfo imageCreateInfo(uint32_t width, uint32_t height, VkFormat format, VkImageTiling tiling, VkImageUsageFlags usage, uint32_t mip_levels = 1);
+
+		static VkMemoryAllocateInfo memoryAllocateInfo(VkDeviceSize size, uint32_t memory_type_index);
+
+		static VkCommandBufferAllocateInfo commandBufferAllocateInfo(VkCommandPool pool, uint32_t command_buffer_count);
+
+		static VkCommandBufferBeginInfo commandBufferBeginInfo(VkCommandBufferUsageFlags flag);
+
+		static VkImageMemoryBarrier imageMemoryBarrier();
+
+		static VkImageMemoryBarrier imageMemoryBarrier(VkImage& image, VkFormat& format, VkImageLayout& old_layout, VkImageLayout& new_layout);
+
+		static VkSubmitInfo submitInfo(VkCommandBuffer& buffer);
+
 
     };
 }}

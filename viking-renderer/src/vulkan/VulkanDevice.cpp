@@ -98,3 +98,28 @@ VulkanPhysicalDevice & viking::vulkan::VulkanDevice::GetPhysicalDevice()
 {
 	return *m_physical_device;
 }
+
+VkQueue * viking::vulkan::VulkanDevice::GetGraphicsQueue()
+{
+	return &m_graphics_queue;
+}
+
+VkQueue * viking::vulkan::VulkanDevice::GetPresentQueue()
+{
+	return &m_present_queue;
+}
+
+VkQueue * viking::vulkan::VulkanDevice::GetComputeQueue()
+{
+	return &m_compute_queue;
+}
+
+VkCommandPool * viking::vulkan::VulkanDevice::GetGraphicsCommandPool()
+{
+	return &m_graphics_command_pool;
+}
+
+VkCommandPool * viking::vulkan::VulkanDevice::GetComputeCommandPool()
+{
+	return &m_compute_command_pool;
+}
