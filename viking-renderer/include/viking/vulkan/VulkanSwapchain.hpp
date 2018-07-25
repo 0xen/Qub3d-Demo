@@ -41,8 +41,6 @@ namespace viking {
 			void createSemaphores();
 			void destroySemaphores();
 
-			void createImageView(VkImage image, VkFormat format, VkImageAspectFlags aspect_flags, VkImageView & view);
-
 			void getSwapChainSupport(VulkanSwapChainConfiguration & support);
 			VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR>& available_formats);
 			VkPresentModeKHR chooseSwapPresentMode(const std::vector<VkPresentModeKHR> available_present_modes);

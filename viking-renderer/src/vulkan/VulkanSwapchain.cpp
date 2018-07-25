@@ -213,7 +213,7 @@ void viking::vulkan::VulkanSwapchain::createSwapchainImages()
 	int i = 0;
 	for (auto swapchain_image : m_swap_chain_images)
 	{
-		createImageView(swapchain_image, m_surface_format.format, VK_IMAGE_ASPECT_COLOR_BIT, m_swap_chain_image_views[i]);
+		VulkanCommon::createImageView(m_device,swapchain_image, m_surface_format.format, VK_IMAGE_ASPECT_COLOR_BIT, m_swap_chain_image_views[i]);
 		i++;
 	}
 }
@@ -330,17 +330,6 @@ void viking::vulkan::VulkanSwapchain::destroySemaphores()
 {
 	vkDestroySemaphore(m_device->GetVulkanDevice(), m_image_available_semaphore, nullptr);
 	vkDestroySemaphore(m_device->GetVulkanDevice(), m_render_finished_semaphore, nullptr);
-}
-
-void viking::vulkan::VulkanSwapchain::createImageView(VkImage image, VkFormat format, VkImageAspectFlags aspect_flags, VkImageView & view)
-{
-	VkImageViewCreateInfo create_info = VulkanInitializers::imageViewCreate(image, format, aspect_flags);
-	bool sucsess = VulkanInitializers::validate(vkCreateImageView(
-		m_device->GetVulkanDevice(),
-		&create_info,
-		nullptr,
-		&view
-	)); 
 }
 
 void viking::vulkan::VulkanSwapchain::getSwapChainSupport(VulkanSwapChainConfiguration & support)
