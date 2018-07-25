@@ -10,9 +10,9 @@ set(common_source
 set(common_headers
 	include/viking/API.hpp
 	include/viking/IRenderer.hpp
-    include/viking/WindowDescriptor.hpp
-    include/viking/IWindow.hpp
-    include/viking/SDLWindow.hpp
+  include/viking/WindowDescriptor.hpp
+  include/viking/IWindow.hpp
+  include/viking/SDLWindow.hpp
 )
 
 include_directories(include)
@@ -62,6 +62,8 @@ if(Vulkan_FOUND)
         include/viking/vulkan/IVulkanSurface.hpp
         include/viking/vulkan/VulkanSDLSurface.hpp
         include/viking/vulkan/VulkanSwapchain.hpp
+        include/viking/vulkan/VulkanQueueFamilyIndices.hpp
+        include/viking/vulkan/VulkanSwapChainConfiguration.hpp
     )
 
     include_directories(${Vulkan_INCLUDE_DIRS})

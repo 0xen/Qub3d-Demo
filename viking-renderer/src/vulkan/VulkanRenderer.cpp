@@ -12,6 +12,7 @@ VulkanRenderer::VulkanRenderer()
 
 VulkanRenderer::~VulkanRenderer()
 {
+	delete m_swapchain;
 	delete m_device;
     delete m_pdevice;
     delete m_instance;
@@ -70,5 +71,5 @@ void VulkanRenderer::setupVulkan()
 
 	m_device = new VulkanDevice(m_pdevice);
 
-	m_swapchain = new VulkanSwapchain(m_device, m_vulkan_surface);
+	m_swapchain = new VulkanSwapchain(m_device,m_window, m_vulkan_surface);
 }

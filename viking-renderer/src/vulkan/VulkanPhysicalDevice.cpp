@@ -2,7 +2,7 @@
 
 using namespace viking::vulkan;
 
-VulkanPhysicalDevice::VulkanPhysicalDevice(VkPhysicalDevice device, QueueFamilyIndices queue_family)
+VulkanPhysicalDevice::VulkanPhysicalDevice(VkPhysicalDevice device, VulkanQueueFamilyIndices queue_family)
 {
     m_device = device;
     m_queue_family = queue_family;
@@ -38,7 +38,7 @@ VkPhysicalDevice & VulkanPhysicalDevice::GetPhysicalDevice()
 	return m_device;
 }
 
-QueueFamilyIndices * viking::vulkan::VulkanPhysicalDevice::getQueueFamilies()
+VulkanQueueFamilyIndices * viking::vulkan::VulkanPhysicalDevice::getQueueFamilies()
 {
 	return &m_queue_family;
 }
@@ -59,10 +59,10 @@ VulkanPhysicalDevice* VulkanPhysicalDevice::getSuitablePhysicalDevice(VkInstance
     std::vector<VkPhysicalDevice> devices = getPhysicalDevices(instance);
 
     VkPhysicalDevice chosen_device = VK_NULL_HANDLE;
-    QueueFamilyIndices chosen_queue_family;
+    VulkanQueueFamilyIndices chosen_queue_family;
     for (auto& device : devices)
     {
-        QueueFamilyIndices queue_family;
+        VulkanQueueFamilyIndices queue_family;
         if (checkDeviceExtensionSupport(device) && supportsQueueFamily(device, queue_family, surface ))
         {
             VkPhysicalDeviceProperties temp_physical_device_properties;
@@ -125,7 +125,7 @@ bool VulkanPhysicalDevice::checkDeviceExtensionSupport(VkPhysicalDevice & device
     return required_extensions.empty();
 }
 
-bool VulkanPhysicalDevice::supportsQueueFamily(VkPhysicalDevice & device, QueueFamilyIndices & queue_family_indices, VkSurfaceKHR& surface)
+bool VulkanPhysicalDevice::supportsQueueFamily(VkPhysicalDevice & device, VulkanQueueFamilyIndices & queue_family_indices, VkSurfaceKHR& surface)
 {
     uint32_t queue_family_count = 0;
     // Get the total amount of queue family's

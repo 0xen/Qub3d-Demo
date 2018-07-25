@@ -16,6 +16,7 @@ namespace viking
 		virtual void poll();
 		virtual void swapBuffers();
 		virtual bool isRunning();
+		virtual void GetSize(int& width, int& height);
 		SDL_Window* GetSDLWindow();
 	protected:
 		SDLWindow(WindowingAPI windowing_api);

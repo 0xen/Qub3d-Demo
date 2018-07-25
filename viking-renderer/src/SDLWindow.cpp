@@ -41,6 +41,14 @@ bool SDLWindow::isRunning()
 	return m_running;
 }
 
+void SDLWindow::GetSize(int & width, int & height)
+{
+	SDL_DisplayMode DM;
+	SDL_GetCurrentDisplayMode(SDL_GetWindowDisplayIndex(m_window), &DM);
+	width = DM.w;
+	height = DM.h;
+}
+
 SDL_Window * viking::SDLWindow::GetSDLWindow()
 {
 	return m_window;

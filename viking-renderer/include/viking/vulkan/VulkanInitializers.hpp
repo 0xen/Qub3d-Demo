@@ -2,6 +2,8 @@
 
 #include <vector>
 #include <vulkan/vulkan.h>
+#include <viking/vulkan/VulkanQueueFamilyIndices.hpp>
+#include <viking/vulkan/VulkanSwapChainConfiguration.hpp>
 
 namespace viking { namespace vulkan 
 {
@@ -19,6 +21,9 @@ namespace viking { namespace vulkan
 
 		static VkCommandPoolCreateInfo commandPoolCreateInfo(uint32_t queue_family_index, VkCommandPoolCreateFlags flags = 0);
 
+		static VkSwapchainCreateInfoKHR swapchainCreateInfoKHR(VkSurfaceFormatKHR surface_format, VkExtent2D extent, VkPresentModeKHR present_mode, uint32_t image_count, VkSurfaceKHR surface, VulkanQueueFamilyIndices indices, VulkanSwapChainConfiguration swap_chain_support);
+
+		static VkImageViewCreateInfo imageViewCreate(VkImage image, VkFormat format, VkImageAspectFlags aspect_flags);
 
     };
 }}
